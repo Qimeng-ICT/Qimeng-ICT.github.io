@@ -897,4 +897,28 @@ footer {
     font-size: 1.05rem;
     line-height: 1.6;
     text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    max-width: 100%;
+    hyphens: auto;
+}
+
+/* 添加图片样式 */
+.feature-image {
+    max-width: 100%;    /* 响应式宽度 */
+    height: auto;       /* 保持比例 */
+    margin: 15px 0;     /* 上下边距 */
+    display: block;     /* 单独一行显示 */
+    border-radius: 8px; /* 可选圆角 */
+}
+
+/* 如果希望图片居中 */
+.feature-image {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 或者直接为段落添加居中样式 */
+.sub-feature-description {
+    text-align: center; /* 可选段落居中 */
 }
