@@ -958,3 +958,10 @@ footer {
     background-color: #f5f5f5;
     transform: translateX(5px);
 }
+
+
+.features-section .container-fluid .feature-card {
+  max-width: 1800px;   /* or whatever maximum width you prefer */
+  width: 100%;         /* so it can shrink below 1200px */
+  margin: 0 auto;      /* center in the viewport */
+}
