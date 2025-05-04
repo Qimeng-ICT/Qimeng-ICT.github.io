@@ -918,15 +918,22 @@ footer {
     margin-right: auto;
 }
 
-/* 或者直接为段落添加居中样式 */
+
 .sub-feature-description {
-    text-align: center; /* 可选段落居中 */
+    text-align: justify;
+    text-justify: inter-word;
+    text-align-last: left;
+    hyphens: auto;
+    word-break: break-word;
 }
 
-
-
-
-
+/* Safari 兼容 */
+@supports (-webkit-touch-callout: none) {
+    .sub-feature-description {
+        -webkit-text-align-last: justify;
+        -webkit-hyphens: auto;
+    }
+}
 
 .feature-list {
     list-style: none;
