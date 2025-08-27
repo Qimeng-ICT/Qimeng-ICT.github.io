@@ -967,6 +967,36 @@ footer {
 }
 
 
+.download-count-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    margin: 0 0 0 8px;
+    padding: 2px 6px;
+    background-color: #f0f7ff;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    vertical-align: middle;
+}
+
+.download-icon {
+    color: #0366d6;
+    font-size: 0.9rem;
+}
+
+.download-count {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0366d6;
+}
+
+.download-text {
+    font-size: 0.8rem;
+    color: #4b5563;
+    font-weight: 400;
+}
+
 .features-section .container-fluid .feature-card {
   max-width: 1800px;   /* or whatever maximum width you prefer */
   width: 100%;         /* so it can shrink below 1200px */
