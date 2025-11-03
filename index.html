@@ -4,413 +4,1323 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QiMeng: Fully Automated Hardware and Software Design for Processor Chip</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 基础变量定义 */
+        :root {
+            --primary: #007bff;
+            --primary-dark: #0056b3;
+            --secondary: #ff6f61;
+            --accent-orange: #ea580c;
+            --conference-bg: #e6f4ff;
+            --conference-text: #0969da;
+            --light-bg: #f4f7fa;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --text-dark: #111827;
+            --text-gray: #4b5563;
+            --text-light-gray: #6b7280;
+            --transition-default: all 0.3s ease;
+            --panel-line: #e5e7eb;
+        }
+
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-default);
+        }
+
+        /* 顶部小栏样式 */
+        .topbar {
+            width: 100%;
+            background-color: #4373AE; /* 与下方头部一致 */
+            color: #ffffff;
+            border-bottom: none;
+            font-size: 16px;
+            padding: 20px 40px;
+        }
+
+        .topbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topbar-logo {
+            height: 40px; /* 稍大以更协调 */
+            width: auto;
+        }
+
+        .topbar-text {
+            font-style: italic;
+            color: #ffffff;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        /* 头部样式 */
+        header {
+            background-color: #4373AE;
+            height: 250px;
+            color: white;
+            padding: 36px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative; /* 使右下角计数器可定位 */
+        }
+
+        .header-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap; /* 缩放时自动换行 */
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            margin: 0;
+            opacity: 0.95;
+        }
+
+        .visit-counter {
+            position: absolute;
+            right: 12px;
+            bottom: 8px;
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            backdrop-filter: blur(2px);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition-default);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-dark);
+            transform: scale(1.05);
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 概述部分样式 */
+        .overview-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 60px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .overview-content {
+            display: flex;
+            flex-direction: column; /* 改为纵向排布，仅展示文本 */
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overview-text {
+            flex: 0 0 auto;
+            max-width: 1000px; /* 控制段落宽度 */
+            text-align: center;
+        }
+
+        .overview-text p {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+            letter-spacing: 0.2px;
+            margin: 0 auto;               /* 居中排版 */
+            padding: 0 10px;               /* 两侧留白 */
+        }
+
+        /* 移除图片相关样式（保留占位以防未来需要） */
+
+        /* 特性区块样式 */
+        .features-section {
+            margin-top: 20px;
+        }
+
+        .features-section h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* Applications 导航面板 */
+        .app-nav-panel {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 16px 18px;
+            margin: 10 auto 30px auto;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .app-nav-panel::before { /* 中间水平线（两端留边） */
+            content: "";
+            position: absolute;
+            left: 24px;
+            right: 24px;
+            top: calc(40%);
+            height: 1px;
+            background: var(--panel-line);
+        }
+
+        .app-nav-panel::after { /* 垂直分割线（列3与列4之间，贯穿上下两行） */
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 12px;
+            bottom: 12px;
+            width: 2px;
+            background: var(--panel-line);
+            transform: translateX(-0.5px);
+        }
+
+        .app-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: 50px 62px;
+            align-items: center;
+            text-align: center;
+            gap: 0;
+        }
+
+
+        /* 导航按钮默认样式：突出链接特征 */
+        .app-nav-btn {
+            /* 保留原有样式 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+            height: 48px;
+            color: var(--primary); /* 用主题主色作为链接默认色（区别于普通文本） */
+            text-decoration: underline; /* 下划线是链接的典型特征 */
+            text-underline-offset: 4px; /* 下划线与文本保持一定距离，更美观 */
+            text-decoration-thickness: 1px; /* 下划线粗细 */
+            border-radius: 0px;
+            transition: all 0.2s; /* 过渡动画覆盖颜色和下划线 */
+            box-sizing: border-box;
+        }
+
+        /* 鼠标悬停时：强化链接交互感 */
+        .app-nav-btn:hover {
+            background: #f3f4f6;
+            color: var(--primary-dark); /* 颜色加深，增强反馈 */
+            text-decoration-thickness: 2px; /* 下划线变粗 */
+        }
+
+        /* 已点击/活跃状态（可选，若需要） */
+        .app-nav-btn:active {
+            color: var(--primary-darker); /* 进一步加深颜色 */
+        }
+
+        /* 第二行按钮保持一致样式 */
+        .app-row-2 .app-nav-btn {
+            /* 保留原有样式 */
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            border-left: 1px solid var(--panel-line);
+            /* 继承链接特征 */
+            color: var(--primary);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .app-row-2 .app-nav-btn:hover {
+            color: var(--primary-dark);
+            text-decoration-thickness: 2px;
+        }
+
+        
+
+        /* 保持第一行的位置调整（作用于网格项） */
+        .app-nav-grid > :nth-child(-n+6) {
+            align-self: start;
+            margin-top: -5px;
+        }
+        .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(1),
+        .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(2) {
+            font-size: 1.2rem;
+            font-weight: bold; /* 字体加粗 */
+        }
+
+
+        .app-nav-btn:hover {
+            background: #f3f4f6;
+        }
+
+        /* 第二行的列分割线 */
+        .app-row-2 .app-nav-btn {
+            border-left: 1px solid var(--panel-line);
+        }
+        .app-row-2 .app-nav-btn:first-child {
+            border-left: none;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        .feature-section {
+            margin-top: 80px;
+        }
+
+        .feature-section h2 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .feature-section p {
+            margin-bottom: 30px;
+            color: var(--text-gray);
+            font-size: 1.05rem;
+        }
+
+        /* 子分类样式 */
+        .subcategory {
+            margin-bottom: 40px;
+        }
+
+        .subcategory-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            cursor: pointer;
+            margin: 20px 0 15px 0;
+            user-select: none;
+        }
+
+        .subcategory-triangle {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 6px solid var(--primary-dark);
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            transition: transform 0.3s ease;
+        }
+
+        .subcategory-triangle.expanded {
+            transform: rotate(90deg);
+        }
+
+        .subcategory-content {
+            margin-left: 16px; /* 与三角图标对齐 */
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        /* 论文卡片容器 */
+        .papers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 28px; /* 卡片之间更紧凑 */
+        }
+
+        /* 论文卡片样式（保持不变） */
+        .paper-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: var(--transition-default);
+        }
+
+        .paper-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .card-content {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 200px; /* 收窄卡片最小高度 */
+        }
+
+
+        /* 左侧图片容器：确保容器足够容纳图片，且居中布局 */
+        .left-column {
+            flex: 0 0 28%;
+            padding: 8px; 
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            min-height: 180px; /* 可选：给容器一个最小高度，避免图片过小时容器过矮 */
+        }
+
+        /* 图片样式：完整显示、自适应缩放、居中 */
+        .left-column img {
+            width: 100%; /* 宽度适应容器 */
+            height: 100%; /* 高度适应容器 */
+            object-fit: contain; /* 关键：图片完整显示，不裁剪，可能有空白边 */
+            border-radius: 8px;
+            display: block;
+            /* 移除固定aspect-ratio，让图片保持原始比例 */
+            /* aspect-ratio: 16 / 12; 这行注释或删除 */
+        }
+
+        /* 响应式调整：在小屏幕上保持同样的自适应逻辑 */
+        @media (max-width: 1024px) {
+            .left-column img {
+                /* 同样移除固定aspect-ratio，或根据需要调整为更灵活的比例 */
+                /* aspect-ratio: 16 / 9; 这行注释或删除 */
+                object-fit: contain; /* 保持完整显示 */
+            }
+        }
+
+        /* 中间区域：核心内容（保持不变） */
+        .middle-column {
+            flex: 0 0 56%;
+            padding: 12px 20px; /* 中列更紧凑 */
+        }
+
+        .main-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            line-height: 1.3;
+            text-align: left;
+        }
+
+        /* 提高优先级，确保标题左对齐覆盖 .features-section h2 样式 */
+        .features-section .paper-card .main-title { text-align: left; }
+
+        .main-title a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .authors {
+            font-size: 12px;
+            color: var(--text-light-gray);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .description {
+            font-size: 12.5px;
+            color: var(--text-gray);
+            line-height: 1.5;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 4; /* 文本行数更少，降低高度 */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+
+        .institution {
+            display: flex;
+            align-items: center;
+            background-color: #eff6ff;
+            border: 1px solid #dbeafe;
+            border-radius: 999px;
+            padding: 2px 8px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .institution-logo {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            margin-right: 4px;
+        }
+
+        .publish-date {
+            color: var(--text-light-gray);
+            margin-bottom: 8px;
+        }
+
+        /* 右侧区域：交互区（关键修改） */
+        .right-column {
+            flex: 0 0 16%;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* 1. 父容器水平右对齐 */
+            box-sizing: border-box; /* 解决之前的空隙问题 */
+            margin: 0;
+            width: 100%;
+        }
+
+        /* 会议标签样式（修改文本右对齐） */
+        .conference {
+            display: block;
+            height: 80px;  
+            background-color: var(--conference-bg);
+            color: var(--conference-text);
+            font-weight: 1000;
+            padding: 20px 25px;
+            border-radius: 8px;
+            font-size: 22px;
+            text-align: center; /* 2. 标签文本右对齐 */
+            border: 1px solid #d1e5fe;
+            margin-bottom: 50px;
+            width: 100%; /* 保持占满宽度 */
+        }
+
+        /* 操作按钮组（关键修改：取消居中，继承右对齐） */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: auto; /* 底部对齐 */
+            width: 100%;
+            align-items: center; /* 3. 按钮组水平右对齐（之前是 center） */
+        }
+
+        /* 单个操作按钮（保持不变，内部内容仍居中） */
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* 按钮内部图标+文字居中 */
+            gap: 8px;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            width: 100%; /* 按钮占满按钮组宽度 */
+            text-wrap: nowrap;
+        }
+
+        .action-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        .action-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .github-stars {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 80px;
+            min-height: 100px; /* 确保页脚有足够的高度 */
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 1024px) {
+            .left-column, .middle-column, .right-column {
+                flex: 0 0 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .right-column {
+                border-bottom: none;
+                flex-direction: row;
+                align-items: center;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            .conference {
+                margin-right: auto;
+                margin-bottom: 0;
+                font-size: 16px;
+                padding: 8px 12px;
+            }
+            .action-buttons {
+                flex-direction: row;
+                margin-top: 0;
+                gap: 10px;
+            }
+            .action-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            .left-column img { aspect-ratio: 16 / 9; }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .features-section h2 {
+                font-size: 2rem;
+            }
+
+            .feature-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .subcategory-header {
+                font-size: 1.2rem;
+            }
+
+            .right-column {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .conference {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .overview-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            header p {
+                font-size: 0.95rem;
+            }
+
+            .main-title{
+                font-size: 14px;
+            }
+            .conference {
+                font-size: 12px;
+            }
+
+            .topbar-logo {
+                height: 26px; /* 移动端稍小 */
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="header-container">
-        <div class="container">
-            <div class="header-content">
-                <h1 class="site-title"></i>QiMeng: Fully Automated Hardware and Software Design for Processor Chip</h1>
-                An open-source project for automated, high-performance, and easily deployable IC full-stack design.
-                <!-- <p class="tagline">Empowering LLMs for HDL Generation through Multi-Level Summarization</p> -->
-                
-                <!-- <div class="version-badge">
-                    <span class="whats-new">What's New</span>
-                    <span class="version-info">Coming soon v0.1.1 <i class="fas fa-chevron-right"></i></span>
-                </div> -->
-                
-                <!-- <div class="action-buttons">
-                    <a href="https://github.com/IPRC-DIP/CodeV" class="btn">
-                        <i class="fab fa-github"></i> Follow @username
-                    </a>
-                    <a href="https://github.com/IPRC-DIP/CodeV" class="btn">
-                        <i class="far fa-star"></i> Star
-                    </a>
-                    <a href="https://github.com/IPRC-DIP/CodeV/fork" class="btn">
-                        <i class="fas fa-code-branch"></i> Fork
-                    </a>
-                    <a href="https://github.com/IPRC-DIP/CodeV/issues" class="btn">
-                        <i class="fas fa-exclamation-circle"></i> Issues
-                    </a>
-                </div>
-                <div class="secondary-buttons">
-                    <a href="https://arxiv.org/abs/2407.10424" class="btn">
-                        <i class="fas fa-file-pdf"></i> Paper
-                    </a>
-                    <a href="https://huggingface.co/yang-z" class="btn">
-                        <i class="fas fa-download"></i> Download
-                    </a>
-                    <a href="https://iprc-dip.github.io/Chip-Design-LLM-Zoo/" class="btn">
-                        <i class="fas fa-trophy"></i> LearnBoard
-                    </a>
-                </div>
-                <p class="description">
-                    CodeV is the first series of open-source LLMs designed for multi-scenario HDL generation. Through multi-level summarization data synthesis and an innovative Chat-FIM-Tag supervised fine-tuning method, it significantly enhances the ability to generate HDL code from natural language descriptions and can handle various tasks such as chat and FIM.
-                </p> -->
+
+    <!-- Top Thin Bar -->
+    <div class="topbar">
+        <div class="topbar-content">
+            <div class="topbar-left">
+                <img class="topbar-logo" src="./src/title_logo.png" alt="ICT & ISCAS Logos">
             </div>
+            <div class="topbar-text">Intelligent Processor Research Center (IPRC), ICT, CAS</div>
         </div>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="header-line">
+        <h1>QiMeng: Fully Automated Hardware and Software Design for Processor Chip</h1>
+        <p>An open-source project for automated, high-performance, and easily deployable IC full-stack design.</p>
+        </div>
+        <div id="visitCounter" class="visit-counter">总访问量：--</div>
     </header>
 
-    <!-- Application Layer Section -->
-    <!-- <section class="application-layer">
-        <div class="container">
-            <h2 class="application-title">Application Layer</h2>
-            <p class="application-description">CodeV enables natural language to Verilog/Chisel conversion, code completion, and interactive chat assistance</p>
-        </div>
-    </section> -->
-    
-    <!-- Features Section -->
-    <!-- <section class="features-section">
-        <div class="container">
-            <div class="features">
-                <div class="feature-card">
-                    <h3 class="feature-title">Data</h3>
-                    <p class="feature-description">High-quality HDL code collection dataset for model training and fine-tuning.</p>
-                    <ul class="feature-list">
-                        <li><a href="#" class="feature-link">165k-Verilog</a></li>
-                        <li><a href="#" class="feature-link">184k-Verilog-Chisel</a></li>
-                    </ul>
-                </div>
-
-                <div class="feature-card">
-                    <h3 class="feature-title">Models</h3>
-                    <p class="feature-description">Multiple HDL generation models with various capabilities and focuses.</p>
-                    <ul class="feature-list">
-                        <li><a href="#" class="feature-link">CodeV-Verilog</a></li>
-                        <li><a href="#" class="feature-link">CodeV-All</a></li>
-                        <li><a href="#" class="feature-link">CodeV-R1</a></li>
-                    </ul>
-                </div>
-
-                <div class="feature-card">
-                    <h3 class="feature-title">Evaluation</h3>
-                    <p class="feature-description">Comprehensive benchmarks for evaluating HDL generation and infilling capabilities.</p>
-                    <ul class="feature-list">
-                        <li><a href="#" class="feature-link">Chat</a></li>
-                        <li><a href="#" class="feature-link">FIM (Fill-in-Middle)</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- Open Model Repository Section -->
-    <!-- <section class="application-section">
-        <div class="container">
-            <div class="feature-card full-width">
-                <h2 class="feature-title">Application</h2>
-            </div>
-        </div>
-    </section> -->
-    <section class="features-section">
-        <div class="container-fluid">
-            
-            <div class="feature-card full-width">
-                <h2 class="feature-title">Overview</h2>
-                <!-- <p class="application-description">model.baai.ac.cn</p> -->
-                <!-- 新增的子模块容器 -->
-                    <p class="sub-feature-description">
-                        As the fundamental hardware substrate of computing systems, chips undertake critical functionalities including instruction execution, data processing, and system resource management. Chips are ubiquitously deployed across personal computers, servers, smartphones, and IoT devices, serving as the cornerstone of modern digital economies. Chip design technology represents not only a strategically vital industry for national economic development but also a cutting-edge domain in scientific research, playing a pivotal role in advancing computer science and related disciplines. The design process constitutes an exceptionally complex systems engineering challenge, requiring deep cross-layer co-design between hardware and software architectures while simultaneously satisfying multifaceted design constraints encompassing functionality, performance, power efficiency, and area (PPA). These intrinsic characteristics have established processor chip design as one of the most technically demanding research frontiers in both academic and industrial spheres.
-                        <img src="assets/overview.png" alt="todo" class="feature-image">
-                    </p>
+    <!-- Main Content Section -->
+    <div class="container">
+        <section class="features-section">
+            <!-- Overview部分 -->
+            <h2>Overview</h2>
+            <div class="overview-section">
+                <div class="overview-content">
+                    <div class="overview-text">
+                        <p>
+                            QiMeng aims to achieve fully automated design of the chip hardware/software stack by leveraging large language models (LLMs), agent and Boolean logic search technologies. QiMeng has achieved automated designing RISC-V CPUs, optimizing operating system configuration, transcompiling tensor programs and developing high-performance libraries, achieving performance that is comparable to human expertise.
+                        </p>
+                    </div>
                     
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- Open Model Repository Content -->
-    <section class="features-section">
-        <div class="container-fluid">
-            
-            <div class="feature-card full-width">
-                <h2 class="feature-title">Applications</h2>
-                <!-- <p class="application-description">model.baai.ac.cn</p> -->
-                <!-- 新增的子模块容器 -->
-                <div class="sub-features">
-                    <!-- 子模块verilog -->
-                    <div class="sub-feature-card">
-                        <div class="feature-content">
-                            <h3 class="sub-feature-title">
-                                Chip Design
-                            </h3>
-                            <p class="sub-feature-description">
-                                Chip Design consists of two parts: Automatic HDL Generation, which aims to train LLMs to generate HDL modules or fill the HDL code; and Automatic CPU Design, which fully automates the design of an entire CPU starting from I/Os.
-                            </p>
-                            <ul class="feature-list">
-                                <div class="parent-item">Automatic HDL Generation</div>
-                                    <ul class="sub-feature-list">
-                                        <li>
-                                            <a href="https://yyyangzhao.github.io/CodeV-Series/" class="sub-feature-link">
-                                                CodeV series
-                                                <div id="download-count-container" class="download-count-container">
-                                                    <i class="fas fa-download download-icon"></i>
-                                                    <span id="download-count" class="download-count">Loading...</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                <div class="parent-item">Automatic CPU Design</div>
-                                    <ul class="sub-feature-list">
-                                        <li>
-                                            <a href="https://qimeng-ict.github.io/Qimeng-1/" class="sub-feature-link">
-                                                QiMeng-CPU-v1 (IJCAI'24)
-                                            </a>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://qimeng-ict.github.io/Qimeng-2/" class="sub-feature-link">
-                                                QiMeng-CPU-v2 (IJCAI'25)
-                                            </a>
-                                        </li>
-                                    </ul>
-                                <!-- </li>
-                                <li>
-                                    <a href="#" class="feature-link">
-                                        Netlist级
-                                    </a>
-                                </li> -->
-                                <!-- 其他列表项 -->
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- 子模块操作系统 -->
-                    <div class="sub-feature-card">
-                        <div class="feature-content">
-                            <h3 class="sub-feature-title">
-                                Operating System
-                            </h3>
-                            <p class="sub-feature-description">
-                                Operating system aims to automatically generate optimized operating system configurations.
-                            </p>
-                            <ul class="feature-list">
-                                <div class="parent-item">Automatic OS Config Optimization</div>
-                                    <ul class="sub-feature-list">
-                                        <li>
-                                            <a href="https://xuewuyinhe.github.io/AutoOS/" class="sub-feature-link">
-                                                AutoOS (ICML'24)
-                                            </a>
-                                        </li>
-                                        <!-- <li>
-                                            <a href="https://xuewuyinhe.github.io/os.github.io/" class="sub-feature-link">
-                                                BYOS
-                                            </a>
-                                        </li> -->
-                                    </ul>
-                                <!-- 其他列表项 -->
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- 子模块高性能库 -->
-                    <div class="sub-feature-card">
-                        <div class="feature-content">
-                            <h3 class="sub-feature-title">
-                                High-performance Library
-                            </h3>
-                            <p class="sub-feature-description">
-                                High-performance library aims to automatically optimize the performance of common operators (e.g., GEMM) and provides a complete automated optimization toolchain.
-                            </p>
-                            <ul class="feature-list">
-                                <!-- <li>
-                                    <a href="#" class="feature-link">
-                                        Heron
-                                    </a>
-                                </li> -->
-                                <div class="parent-item">GEMM</div>
-                                    <ul class="sub-feature-list">
-                                        <li>
-                                            <a href="https://chris-chow.github.io/QiMeng-GEMM" class="sub-feature-link">
-                                                QiMeng-GEMM (AAAI'25)
-                                            </a>
-                                        </li>
-                                    </ul>
-                                <div class="parent-item">Attention</div>
-                                    <ul class="sub-feature-list">
-                                        <li>
-                                            <a href="https://chris-chow.github.io/QiMeng-Attention" class="sub-feature-link">
-                                                QiMeng-Attention (ACL'25)
-                                            </a>
-                                        </li>
-                                    </ul>
-                                <div class="parent-item">TensorOp</div>
-                                    <ul class="sub-feature-list">
-                                        <li>
-                                            <a href="https://zhangxuzhi.github.io/QiMeng-TensorOp" class="sub-feature-link">
-                                                QiMeng-TensorOp (IJCAI'25)
-                                            </a>
-                                        </li>
-                                    </ul>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- 子模块编译器 -->
-                    <div class="sub-feature-card">
-                        <div class="feature-content">
-                            <h3 class="sub-feature-title">
-                                Compiler
-                            </h3>
-                            <p class="sub-feature-description">
-                                Compiler consists of two parts: Compiler Generation, which aims to leverage LLMs to complete automated compiler-generation tasks; and Tensor Program Transcompiler, which aims to automatically perform cross-platform tensor-program conversion.
-                            </p>
-                            <ul class="feature-list">
-                                <div class="parent-item">Compiler Generation</div>
-                                    <ul class="sub-feature-list">
-                                        <li>
-                                            <a href="https://wihn2021.github.io/atg-web/" class="sub-feature-link">
-                                                ATG (JCST'23)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://wihn2021.github.io/vega-web/" class="sub-feature-link">
-                                                VEGA (CGO'25)
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://wihn2021.github.io/comback-web/" class="sub-feature-link">
-                                                ComBack (NeurIPS'24)
-                                            </a>
-                                        </li>
-                                    </ul>
-                                <div class="parent-item">Tensor Program Transcompiler</div>
-                                    <ul class="sub-feature-list">
-                                        <li>
-                                            <a href="https://kcxain.github.io/babeltower/" class="sub-feature-link">
-                                                BabelTower (ICML'22)
-                                            </a>
-                                        </li>
-                                        <!-- <li>
-                                            <a href="https://kcxain.github.io/c2cuda/" class="sub-feature-link">
-                                                MSL
-                                            </a>
-                                        </li> -->
-                                        <li>
-                                            <a href="https://kcxain.github.io/QiMeng-Xpiler/" class="sub-feature-link">
-                                                QiMeng-Xpiler (OSDI'25)
-                                            </a>
-                                        </li>
-                                    </ul>
-                                <!-- 其他列表项 -->
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Tools Categories
-            <div class="features">
-                <div class="feature-card">
-                    <h3 class="feature-title">
-                        Data
-                    </h3>
-                    <p class="feature-description">
-                        High-quality HDL code collection dataset for model training and fine-tuning.
-                    </p>
-                    <ul class="feature-list">
-                        <li>
-                            <a href="#" class="feature-link">
-                                165k-Verilog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="feature-link">
-                                184k-Verilog-Chisel
-                            </a>
-                        </li>
-                        <li style="opacity: 0; pointer-events: none;">
-                            <a class="feature-link" style="visibility: hidden;">
-                                <i class="fas fa-file-code"></i> Placeholder
-                            </a>
-                        </li>
-                    </ul>
+            <h2 id="applications">Applications</h2>
+
+            <!-- 应用导航面板 -->
+            <div class="app-nav-panel">
+                <div class="app-nav-grid">
+                    <!-- 第一行：两个区域（各占三列） -->
+                    <a class="app-nav-btn" style="grid-column: 1 / span 3; grid-row: 1" href="#app-chip">Automated Chip Design</a>
+                    <a class="app-nav-btn" style="grid-column: 4 / span 3; grid-row: 1" href="#app-software">Automated Software Design</a>
+
+                    <!-- 第二行：六等分，每列一个按钮，带竖线分隔 -->
+                    <div class="app-row-2" style="grid-column: 1 / span 6; grid-row: 2; display: contents;">
+                        <a class="app-nav-btn" style="grid-column:1" href="#app-cpu">Automated CPU Design</a>
+                        <a class="app-nav-btn" style="grid-column:2" href="#app-hdl">HDL Generation</a>
+                        <a class="app-nav-btn" style="grid-column:3" href="#app-os">Operating System Optimization</a>
+                        <a class="app-nav-btn" style="grid-column:4" href="#app-hplib">High-performance Library Generation</a>
+                        <a class="app-nav-btn" style="grid-column:5" href="#app-compiler">Compiler Generation</a>
+                        <a class="app-nav-btn" style="grid-column:6" href="#app-transcompiler">Tensor Program Transcompiler</a>
+                    </div>
+                    </div>
                 </div>
 
-                <div class="feature-card">
-                    <h3 class="feature-title">
-                        Models
-                    </h3>
-                    <p class="feature-description">
-                        Multiple HDL generation models with various capabilities and focuses.
-                    </p>
-                    <ul class="feature-list">
-                        <li>
-                            <a href="#" class="feature-link">
-                                CodeV-Verilog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="feature-link">
-                                CodeV-All
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="feature-link">
-                                CodeV-R1
-                            </a>
-                        </li>
-                    </ul>
+            <!-- Automated Chip Design -->
+            <section class="feature-section" id="app-chip">
+                <h2>Automated Chip Design</h2>
+                
+                <!-- HDL block moved below; original removed -->
+
+                <!-- 子分类：1.1 Automated CPU Design -->
+                <div class="subcategory" id="app-cpu">
+                    <div class="subcategory-header" onclick="toggleSubcategory(this)">
+                        <span class="subcategory-triangle expanded"></span>
+                        <span>1.1 Automated CPU Design</span>
+                    </div>
+                    <div class="subcategory-content" style="max-height: 1000px;">
+                        <p class="subcategory-intro" style="margin: 0 16px 10px 16px; color: var(--text-light-gray);">Automatic CPU design aims to fully automated design the front-end of an entire CPU starting from I/Os.</p>
+                        <div class="papers-container">
+                            <!-- Paper 1: QiMeng-CPU-v1 -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/qimeng-v1.png" alt="QiMeng-CPU-v1 Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title"><a href="https://qimeng-ict.github.io/Qimeng-1/" target="_blank" rel="noopener noreferrer">QiMeng-CPU-v1: Automated CPU Design by Learning from Input-Output Examples</a></h2>
+                                        <div class="authors">Shuyao Cheng, Pengwei Jin, Qi Guo, Zidong Du, Rui Zhang, Xing Hu, Yongwei Zhao, Yifan Hao, Xiangtao Guan, Husheng Han, Zhengyue Zhao, Ximing Liu, Xishan Zhang, Yuejie Chu, Weilong Mao, Tianshi Chen, Yunji Chen
+                                        </div>
+                                        <p class="description">
+                                            Qimeng-cpu-v1 is an industrial-scale RISC-V CPU design completed within 5 hours, which is over 1700× larger than the state-of-the-art automated-designed circuits. The taped-out chip is the world's first CPU designed by AI, successfully runs the Linux operating system, and performs comparably to the human-designed Intel 80486SX CPU. 
+                                        </p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference">IJCAI'24</div>
+                                        <div class="action-buttons">
+                                            <a href="https://github.com/qimeng-ict/Qimeng-1" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                                </svg>
+                                                GitHub <span class="github-stars"></span>
+                                            </a>
+                                            <a href="https://arxiv.org/abs/2406.12345" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                arXiv Page
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Paper 2: QiMeng-CPU-v2 -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/qimeng-v2.png" alt="QiMeng-CPU-v2 Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title"><a href="https://www.ijcai.org/proceedings/2025/0549.pdf" target="_blank" rel="noopener noreferrer">QiMeng-CPU-v2: Automated Superscalar Processor Design by Learning Data Dependencies</a></h2>
+                                        <div class="authors">Shuyao Cheng, Rui Zhang, Wenkai He, Pengwei Jin, Chongxiao Li, Zidong Du, Xing Hu, Yifan Hao, Guanglin Xu, Yuanbo Wen, Ling Li, Qi Guo, Yunji Chen</div>
+                                        <p class="description">
+                                            Qimeng-cpu-v2 is the world's first CPU designed by AI, improving performance by about 380x over the state-of-the-art automated design methods, and is comparable to human-designed superscalar processors such as the ARM Cortex A53.
+                                        </p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference">IJCAI'25</div>
+                                        <div class="action-buttons">
+                                            <a href="https://github.com/qimeng-ict/Qimeng-2" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                                </svg>
+                                                GitHub <span class="github-stars"></span>
+                                            </a>
+                                            <a href="https://www.ijcai.org/proceedings/2025/0549.pdf" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                arXiv Page
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="feature-card">
-                    <h3 class="feature-title">
-                        Evaluation
-                    </h3>
-                    <p class="feature-description">
-                        Benchmarks for evaluating HDL generation and infilling capabilities.
-                    </p>
-                    <ul class="feature-list">
-                        <li>
-                            <a href="#" class="feature-link">
-                                Chat
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="feature-link">
-                                FIM (Fill-in-Middle)
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="feature-link">
-                                RealBench
-                            </a>
-                        </li>
-                        <li style="opacity: 0; pointer-events: none;">
-                            <a class="feature-link" style="visibility: hidden;">
-                                <i class="fas fa-file-code"></i> Placeholder
-                            </a>
-                        </li>
-                    </ul>
+                <!-- 子分类：1.2 HDL Generation -->
+                <div class="subcategory" id="app-hdl">
+                    <div class="subcategory-header" onclick="toggleSubcategory(this)">
+                        <span class="subcategory-triangle expanded"></span>
+                        <span>1.2 HDL Generation</span>
+                    </div>
+                    <div class="subcategory-content" style="max-height: 1000px;">
+                        <p class="subcategory-intro" style="margin: 0 16px 10px 16px; color: var(--text-light-gray);">Automatic HDL generation aims to train LLMs to generate HDL modules or fill the HDL code.</p>
+                        <div class="papers-container">
+                            <!-- Paper 1: CodeV -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/codev.png" alt="CodeV Series Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title"><a href="https://yyyangzhao.github.io/CodeV-Series/" target="_blank" rel="noopener noreferrer">CodeV: Empowering LLMs with HDL Generation through Multi-Level Summarization</a></h2>
+                                        <div class="authors">Yang Zhao, Di Huang, Chongxiao Li, Pengwei Jin, Muxin Song, Yinan Xu, Ziyuan Nan, Mingju Gao, Tianyun Ma, Lei Qi, Yansong Pan, Zhenxing Zhang, Rui Zhang, Xishan Zhang, Zidong Du, Qi Guo, Xing Hu</div>
+                                        <p class="description">
+                                            CodeV is specifically fine-tuned using the described pipeline but focused primarily on the Verilog language. They are designed to generate accurate Verilog code based on natural language descriptions, achieving strong performance on Verilog-specific benchmarks. CodeV-All extends the capabilities to be multi-lingual (supporting both Verilog and Chisel) and multi-scenario. 
+
+                                        </p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference">TCAD'25</div>
+                                        <div class="action-buttons">
+                                            <a href="https://github.com/IPRC-DIP/CodeV" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                                </svg>
+                                            GitHub <span class="github-stars"></span>
+                                            </a>
+                                            <a href="https://arxiv.org/abs/2505.24183" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                arXiv Page
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- Paper 1: CodeV-R1 -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/codev-r1.png" alt="CodeV Series Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title"><a href="https://yyyangzhao.github.io/CodeV-Series/" target="_blank" rel="noopener noreferrer">QiMeng-CodeV-R1: Reasoning-Enhanced Verilog Generation</a></h2>
+                                        <div class="authors">Yaoyu Zhu, Di Huang, Hanqi Lyu, Xiaoyun Zhang, Chongxiao Li, Wenxuan Shi, Yutong Wu, Jianan Mu, Jinghua Wang, Yang Zhao, Pengwei Jin, Shuyao Cheng, Shengwen Liang, Xishan Zhang, Rui Zhang, Zidong Du, Qi Guo, Xing Hu, Yunji Chen</div>
+                                        <p class="description">
+                                            CodeV-R1 represents a further step towards accuracy by incorporating an explicit reasoning process. Before generating the final HDL code, CodeV-R1 outlines its thought process or plan, aiming to improve the logical correctness and adherence to complex requirements in the generated Verilog. CodeV-R1 exhibits test-time scaling (TTS) ability, and its 7B version is comparable to or surpasses commercial LLMs like 671B DeepSeek-R1.
+                                        </p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference" style="font-size: 22px; height: auto;"> NeurIPS'25</div>
+                                        <div class="action-buttons">
+                                            <a href="https://github.com/iprc-dip/CodeV-R1" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                                </svg>
+                                            GitHub <span class="github-stars"></span>
+                                            </a>
+                                            <a href="https://www.arxiv.org/abs/2505.24183" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                arXiv Page
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- Placeholder: SALV（张炀） -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/sal-v.svg" alt="SALV Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title"><a href="https://zy1xxx.github.io/SALV/" target="_blank" rel="noopener noreferrer">QiMeng-SALV: Signal-Aware Learning for Verilog Code Generation</a></h2>
+                                        <div class="authors">Yang Zhang, Rui Zhang, Jiaming Guo, Lei Huang, Di Huang, Yunpu Zhao, Shuyao Cheng, Pengwei Jin, Chongxiao Li, Zidong Du, Xing Hu, Qi Guo, Yunji Chen</div>
+                                        <p class="description">QiMeng-SALV introduces a novel framework for Verilog code generation that shifts reinforcement learning optimization from module-level to signal-level rewards. By leveraging AST analysis and signal-aware verification, it extracts functionally correct code segments from partially incorrect modules, enabling more effective RL training.</p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference" style="font-size: 22px; height: auto;"> NeurIPS'25</div>
+                                        <div class="action-buttons"></div>
+                                        <div class="action-buttons">
+                                            <a href="https://github.com/zy1xxx/SALV" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                                </svg>
+                                                GitHub <span class="github-stars"></span>
+                                            </a>
+                                            <a href="https://arxiv.org/abs/2510.19296" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                arXiv Page
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
                 </div>
-            </div> -->
-            
-            <!-- About Section -->
-            <!-- <div class="about-section">
-                <h3 class="about-title"><i class="fas fa-info-circle"></i> About Us</h3>
-                <p class="about-description">
-                    AI4IC focuses on applying artificial intelligence technology to integrated circuit design, enhancing design efficiency through automation and intelligence in HDL code generation.
-                    We are committed to developing advanced LLM models that enable designers to generate high-quality hardware description language code directly from natural language descriptions.
-                </p>
-                <div class="tech-stack">
-                    <span class="tech-badge"><i class="fas fa-code"></i> Verilog</span>
-                    <span class="tech-badge"><i class="fas fa-code-branch"></i> Chisel</span>
-                    <span class="tech-badge"><i class="fas fa-brain"></i> LLM</span>
-                    <span class="tech-badge"><i class="fas fa-microchip"></i> EDA</span>
+            </section>
+
+            <!-- 2. Automated Software Design -->
+            <section class="feature-section" id="app-software">
+                <h2>Automated Software Design</h2>
+                
+                <div class="subcategory" id="app-os">
+                    <div class="subcategory-header" onclick="toggleSubcategory(this)">
+                        <span class="subcategory-triangle expanded"></span>
+                        <span>2.1 Operating System Optimization</span>
+                    </div>
+                    <div class="subcategory-content" style="max-height: 1000px;">
+                        <p class="subcategory-intro" style="margin: 0 16px 10px 16px; color: var(--text-light-gray);">Operating system optimization aims to automatically generate optimized operating system configurations.</p>
+                        <div class="papers-container">
+                    <!-- Paper 1: AutoOS -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                <img src="./src/auto-os.png" alt="AutoOS Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                <h2 class="main-title"><a href="https://xuewuyinhe.github.io/AutoOS/" target="_blank" rel="noopener noreferrer">AutoOS：Make your OS more powerful by exploiting large language models</a></h2>
+                                <div class="authors">Huilai Chen, Yuanbo Wen, Limin Cheng, Shouxu Kuang, Yumeng Liu, Weijia Li, Ling Li, Rui Zhang, Xinkai Song, Wei Li, Qi Guo, Yunji Chen</div>
+                                        <p class="description">
+                                    AutoOS is the first framework designed to optimize the Linux kernel configurations of specific OS distributions on certain hardware without human intervention using LLMs, primarily for AIoT scenarios.
+                                </p>
+                                <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                <div class="conference">ICML'24</div>
+                                        <div class="action-buttons">
+                                    <a href="https://github.com/xuewuyinhe/AutoOS" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                                </svg>
+                                        GitHub <span class="github-stars"></span>
+                                            </a>
+                                    <a href="https://openreview.net/pdf?id=Rp8R9C0Sth" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                Paper Link
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
                 </div>
-            </div> -->
-        </div>
-    </section>
+
+                <!-- 2.2 High-performance Library Generation -->
+                <div class="subcategory" id="app-hplib">
+                    <div class="subcategory-header" onclick="toggleSubcategory(this)">
+                        <span class="subcategory-triangle expanded"></span>
+                        <span>2.2 High-performance Library Generation</span>
+                    </div>
+                    <div class="subcategory-content" style="max-height: 1000px;">
+                        <p class="subcategory-intro" style="margin: 0 16px 10px 16px; color: var(--text-light-gray);">High-performance library generation aims to automatically optimize the performance of common operators (e.g., GEMM) and provides a complete automated optimization toolchain.</p>
+                        <div class="papers-container">
+                            <!-- QiMeng-GEMM -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/gemm.png" alt="QiMeng-GEMM Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title" style="font-size: 22px;"><a href="https://chris-chow.github.io/QiMeng-GEMM" target="_blank" rel="noopener noreferrer">QiMeng-GEMM: Automatically Generating High-Performance Matrix Multiplication Code by Exploiting Large Language Models</a></h2>
+                                        <div class="authors">Qirui Zhou, Yuanbo Wen, Ruizhi Chen, Ke Gao, Weiqiang Xiong, Ling Li, Qi Guo, Yanjun Wu and Yunji Chen</div>
+                                        <p class="description">QiMeng‑GEMM presents a novel method for generating optimized implementations of the general matrix-multiplication operator (GEMM) automatically using LLMs. Based on a set of informative, adaptive, and iterative meta-prompts, it enables LLMs to comprehend the architectural characteristics of different hardware platforms and generate high performance GEMM implementations.</p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference">AAAI'25</div>
+                                        <div class="action-buttons">
+                                            <a href="https://github.com/chris-chow/QiMeng-GEMM" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                                GitHub <span class="github-stars"></span>
+                                            </a>
+                                            <a href="https://doi.org/10.1609/aaai.v39i21.34461" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- QiMeng-TensorOp -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/tensor-op.png" alt="QiMeng-TensorOp Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title" style="font-size: 21px;"><a href="https://zhangxuzhi.github.io/QiMeng-TensorOp" target="_blank" rel="noopener noreferrer">QiMeng-TensorOp: One-Line Prompt is Enough for High-Performance Tensor Operator Generation with Hardware Primitives</a></h2>
+                                        <div class="authors">Xuzhi Zhang, Shaohui Peng, Qirui Zhou, Yuanbo Wen, Qi Guo, Ruizhi Chen, Xinguo Zhu, Weiqiang Xiong, Haixin Chen, Congying Ma, Ke Gao, Chen Zhao, Yanjun Wu, Yunji Chen, Ling Li</div>
+                                        <p class="description"> QiMeng-TensorOp is an AI framework that automatically generates high-performance tensor operators with a single prompt, adapting to different hardware platforms and achieving 251% of OpenBLAS performance on RISC-V CPUs and 124% of cuBLAS on NVIDIA GPUs.</p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference">IJCAI'25</div>
+                                        <div class="action-buttons">
+                                            <a href="https://github.com/zhangxuzhi/QiMeng-TensorOp" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a>
+                                            <a href="https://arxiv.org/abs/2505.06302" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>arXiv Page</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- QiMeng-Attention -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/qimeng-attention.png" alt="QiMeng-Attention Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title"><a href="https://chris-chow.github.io/QiMeng-Attention" target="_blank" rel="noopener noreferrer">QiMeng-Attention: SOTA Attention Operator is generated by SOTA Attention Algorithm</a></h2>
+                                        <div class="authors">Qirui Zhou, Shaohui Peng, Weiqiang Xiong, Haixin Chen, Yuanbo Wen, Haochen Li, Ling Li, Qi Guo, Yongwei Zhao, Ke Gao, Ruizhi Chen, Yanjun Wu, Chen Zhao, Yunji Chen</div>
+                                        <p class="description">Qimeng-Attention introduces a self-optimizing framework for high-performance attention code generation. By leveraging an LLM-friendly Thinking Language (LLM-TL) and a two-stage reasoning workflow, it enables LLMs to decouple optimization logic from GPU implementation. The method outperforms human-optimized libraries, achieves up to 35.16× speedup, and reduces development time from months to minutes.</p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference">ACL'25</div>
+                                        <div class="action-buttons">
+                                            <a href="https://github.com/chris-chow/QiMeng-Attention" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a>
+                                            <a href="https://arxiv.org/abs/2506.12355" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>arXiv Page</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.3 Compiler Generation -->
+                <div class="subcategory" id="app-compiler">
+                    <div class="subcategory-header" onclick="toggleSubcategory(this)">
+                        <span class="subcategory-triangle expanded"></span>
+                        <span>2.3 Compiler Generation</span>
+                    </div>
+                    <div class="subcategory-content" style="max-height: 1000px;">
+                        <p class="subcategory-intro" style="margin: 0 16px 10px 16px; color: var(--text-light-gray);">Compiler generation aims to leverage LLMs to complete automated compiler generation tasks.</p>
+                        <div class="papers-container">
+                            <!-- ATG -->
+                            <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/atg.png" alt="ATG Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title" style="font-size: 28px;"><a href="https://wihn2021.github.io/atg-web/" target="_blank" rel="noopener noreferrer">ATG: Automatic Target Description File Generation</a></h2> <div class="authors">Hong-Na Geng, Fang Lyu, Ming Zhong, Hui-Min Cui, Jingling Xue, Xiao-Bing Feng</div> <p class="description">ATG accelerates compiler retargeting by automating the slow creation of target description files for new hardware. It synthesizes templates from similar ISAs, allowing developers to simply define new instructions in tables using these TSPs.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">JCST'23</div> <div class="action-buttons"> <a href="https://github.com/wihn2021/atg" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://link.springer.com/article/10.1007/s11390-022-1919-x" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a> </div> </div> </div> </article>
+
+                            <!-- VEGA -->
+                            <!-- <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/vega.png" alt="VEGA Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title"><a href="https://wihn2021.github.io/vega-web/" target="_blank" rel="noopener noreferrer">VEGA: Automatically Generating Compiler Backends using a Pre-trained Transformer Model</a></h2> <div class="authors">Ming Zhong, Fang Lv, Lulin Wang, Lei Qiu, Yingying Wang, Ying Liu, Huimin Cui, Xiaobing Feng, Jingling Xue</div> <p class="description">VEGA is an AI-driven system that simplifies compiler backend development for new targets. It abstracts existing backend functions into templates and uses a pre-trained model to auto-generate target-specific code based on target description files.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">CGO'25</div> <div class="action-buttons"> <a href="https://huggingface.co/docz1105/VEGA_AE" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://dl.acm.org/doi/10.1145/3696443.3708931" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a> </div> </div> </div> </article> -->
+
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/vega.png" alt="VEGA Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title"><a href="https://wihn2021.github.io/vega-web/" target="_blank" rel="noopener noreferrer">VEGA: Automatically Generating Compiler Backends using a Pre-trained Transformer Model</a></h2>
+                                        <div class="authors">Ming Zhong, Fang Lv, Lulin Wang, Lei Qiu, Yingying Wang, Ying Liu, Huimin Cui, Xiaobing Feng, Jingling Xue</div>
+                                        <p class="description">VEGA is an AI-driven system that simplifies compiler backend development for new targets. It abstracts existing backend functions into templates and uses a pre-trained model to auto-generate target-specific code based on target description files.</p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference">CGO'25</div>
+                                        <div class="action-buttons">
+                                            <!-- Replacing GitHub icon with Hugging Face icon -->
+                                            <a href="https://huggingface.co/docz1105/VEGA_AE" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                Hugging Face
+                                            </a>
+
+                                            <a href="https://dl.acm.org/doi/10.1145/3696443.3708931" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                Paper Link
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+
+                            <!-- ComBack -->
+                            <!-- ComBack -->
+                            <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/comeback.png" alt="ComBack Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title"><a href="https://wihn2021.github.io/comback-web/" target="_blank" rel="noopener noreferrer">ComBack: A Versatile Dataset for Enhancing Compiler Backend Development Efficiency</a></h2>
+                                        <div class="authors">Ming Zhong, Fang Lyu, Lulin Wang, Hongna Geng, Lei Qiu, Huimin Cui, Xiaobing Feng</div>
+                                        <p class="description">ComBack is the first public dataset designed to train language models for compiler backend development, containing 178 backends and 3 development scenarios. Models fine-tuned on ComBack significantly outperformed traditional methods, showing potential for accelerating compiler development.</p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference">NeurIPS'24</div>
+                                        <div class="action-buttons">
+                                            <!-- Replaced GitHub icon with Hugging Face icon -->
+                                            <a href="https://huggingface.co/datasets/docz1105/ComBack" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                Hugging Face
+                                            </a>
+                                            <a href="https://neurips.cc/virtual/2024/poster/97455" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                Paper Link
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Placeholder: QiMeng-NeuComBack（方海南） -->
+                             <article class="paper-card">
+                                <div class="card-content">
+                                    <div class="left-column">
+                                        <img src="./src/neu-comback.png" alt="ComBack Thumbnail" class="w-full h-auto">
+                                    </div>
+                                    <div class="middle-column">
+                                        <h2 class="main-title"><a href="https://fanghainannn.github.io/QiMeng-NeuComBack-Web/" target="_blank" rel="noopener noreferrer">QiMeng-NeuComBack: Self-Evolving Translation from IR to Assembly Code</a></h2>
+                                        <div class="authors">Hainan Fang, Yuanbo Wen, Jun Bi, Yihan Wang, Tonghui He, Yanlin Tang, Di Huang, Jiaming Guo, Rui Zhang, Qi Guo, Yunji Chen</div>
+                                        <p class="description">Qimeng-NeuComBack introduces a benchmark and self-evolving framework for Neural Compilation. Leveraging the benchmark, it establishes new performance baselines of recent frontier LLMs. The proposed method enables LLMs to iteratively evolve their internal prompt strategies by extracting insights from prior self-debugging traces, thereby enhancing their neural compilation capabilities.</p>
+                                        <div class="meta-info"></div>
+                                    </div>
+                                    <div class="right-column">
+                                        <div class="conference">NeurIPS'25</div>
+                                        <div class="action-buttons">
+                                            <a href="https://github.com/FangHainannn/QiMeng-NeuComBack" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a>
+                                            <a href="https://fanghainannn.github.io/QiMeng-NeuComBack-Web/static/paper.pdf" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                Paper Link
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                            
+
+                <!-- 2.4 Tensor Program Transcompiler -->
+                <div class="subcategory" id="app-transcompiler">
+                    <div class="subcategory-header" onclick="toggleSubcategory(this)">
+                        <span class="subcategory-triangle expanded"></span>
+                        <span>2.4 Tensor Program Transcompiler</span>
+                                    </div>
+                    <div class="subcategory-content" style="max-height: 1000px;">
+                        <p class="subcategory-intro" style="margin: 0 16px 10px 16px; color: var(--text-light-gray);">Tensor program transcompiler aims to automatically perform cross-platform tensor-program conversion.</p>
+                        <div class="papers-container">
+                            <!-- BabelTower -->
+                            <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/babeltower.png" alt="BabelTower Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title"><a href="https://kcxain.github.io/babeltower" target="_blank" rel="noopener noreferrer">BabelTower: Learning to Auto-parallelized Program Translation</a></h2> <div class="authors">Yuanbo Wen, Qi Guo, Qiang Fu, Xiaqing Li, Jianxing Xu, Yanlin Tang, Yongwei Zhao, Xing Hu, Zidong Du, Ling Li, Chao Wang, Xuehai Zhou, Yunji Chen</div> <p class="description">BabelTower is a learning-based framework that automatically translates sequential C code into parallel CUDA code. By leveraging large-scale corpora and back-translation with discriminative reranking, it achieves up to 347× speedup and greatly improves developer productivity.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">ICML'22</div> <div class="action-buttons"> <a href="https://github.com/IPRC-ICT/BabelTower" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://proceedings.mlr.press/v162/wen22b/wen22b.pdf" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a> </div> </div> </div> </article>
+
+                            <!-- QiMeng-Xpiler -->
+                            <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/xpiler.png" alt="QiMeng-Xpiler Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title" style="font-size: 24px;"><a href="https://kcxain.github.io/QiMeng-Xpiler" target="_blank" rel="noopener noreferrer">QiMeng-Xpiler: Transcompiling Tensor Programs for Deep Learning Systems with a Neural-Symbolic Approach</a></h2> <div class="authors">Shouyang Dong, Yuanbo Wen, Jun Bi, Di Huang, Jiaming Guo, Jianxing Xu, Ruibai Xu, Xinkai Song, Yifan Hao, Xuehai Zhou, Tianshi Chen, Qi Guo, Yunji Chen</div> <p class="description">QiMeng-Xpiler is a neural-symbolic transcompiler that automatically translates tensor programs across heterogeneous deep learning systems such as GPUs, ASICs, and MLUs. It integrates LLMs with symbolic program synthesis to ensure both correctness and efficiency. By leveraging LLM-assisted compilation passes and hierarchical auto-tuning, QiMeng-Xpiler achieves up to 95% translation accuracy and 2× performance over vendor-optimized libraries.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">OSDI'25</div> <div class="action-buttons"> <a href="https://github.com/kcxain/QiMeng-Xpiler/" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://arxiv.org/pdf/2505.02146" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>arXiv Page</a> </div> </div> </div> </article>
+
+                            <!-- Placeholder: QiMeng-MuPa（柯昌鑫） -->
+                            <!-- 最后一个 paper-card：QiMeng-MuPa -->
+                            <article class="paper-card"> 
+                            <div class="card-content"> 
+                                <div class="left-column"> 
+                                <img src="./src/mupa.png" alt="QiMeng-Xpiler Thumbnail" class="w-full h-auto"> 
+                                </div> 
+                                <div class="middle-column"> 
+                                <h2 class="main-title"><a href="https://kcxain.github.io/mupa" target="_blank" rel="noopener noreferrer">QiMeng-MuPa: Mutual-Supervised Learning for Sequential-to-Parallel Code Translation</a></h2> 
+                                <div class="authors">Changxin Ke, Rui Zhang, Shuo Wang, Li Ding, Guangli Li, Yuanbo Wen, Shuoming Zhang, Ruiyuan Xu, Jin Qin, Jiaming Guo, Chenxi Wang, Ling Li, Qi Guo, Yunji Chen</div> 
+                                <p class="description">QiMeng-MuPa is an innovative mutual-supervised learning framework for automatic sequential-to-parallel code translation. It features a Translator and a Tester that co-evolve through iterative co-verify, ensuring functional equivalence and high-quality translation. QiMeng-MuPa significantly outperforms prior methods and developed the first domain-specific LLM capable of automatic code parallelization for HPC.</p> 
+                                <div class="meta-info"></div> 
+                                </div> 
+                                <div class="right-column"> 
+                                <div class="conference" style="font-size: 22px; height: auto;"> NeurIPS'25</div>
+                                <div class="action-buttons"> 
+                                    <a href="https://github.com/kcxain/mupa" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                    </svg>
+                                    GitHub <span class="github-stars"></span>
+                                    </a> 
+                                    <a href="https://arxiv.org/pdf/2506.11153v2" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    arXiv Page
+                                    </a> 
+                                </div> 
+                                </div> 
+                            </div> 
+                            </article>
+
+                            <!-- 关键问题：以上 paper-card 之后，还有未闭合的父容器标签！ -->
+                            <!-- 你代码中此处之后，缺少了 2.4 子分类的 </div>、软件设计 section 的 </section> 等闭合标签 -->
+
+                    </div>
+                </div>
+            </section>
+
+        </section>
+    </div>
 
     <!-- Footer -->
-    <!-- <footer>
-        <div class="container">
-            <div class="footer-info">
-                <p>&copy; <span class="year">2025</span> CodeV Team. All rights reserved.</p>
-            </div>
-        </div>
-    </footer> -->
+    <footer>
+        <p>&copy; 2025 QiMeng Team. All rights reserved.</p>
+    </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // 展开/收起子分类功能
+        function toggleSubcategory(header) {
+            const triangle = header.querySelector('.subcategory-triangle');
+            const content = header.nextElementSibling;
+            
+            // 切换三角图标状态
+            triangle.classList.toggle('expanded');
+            
+            // 切换内容显示/隐藏
+            if (triangle.classList.contains('expanded')) {
+                // 使用内容实际高度，避免被遮挡
+                content.style.maxHeight = content.scrollHeight + 'px';
+            } else {
+                content.style.maxHeight = '0';
+            }
+        }
+
+        // 页面加载后，确保默认展开的小节高度正确
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.subcategory-header').forEach(function(header) {
+                const triangle = header.querySelector('.subcategory-triangle');
+                const content = header.nextElementSibling;
+                if (triangle && triangle.classList.contains('expanded') && content) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // 简易前端计数器（基于 localStorage；部署到线上需改为服务端存储获取）
+        (function() {
+            try {
+                const key = 'qimeng_total_visit_count';
+                const current = parseInt(localStorage.getItem(key) || '0', 10);
+                const next = isNaN(current) ? 1 : current + 1;
+                localStorage.setItem(key, String(next));
+                const el = document.getElementById('visitCounter');
+                if (el) {
+                    el.textContent = '总访问量：' + next.toLocaleString();
+                }
+            } catch (e) {
+                const el = document.getElementById('visitCounter');
+                if (el) {
+                    el.textContent = '总访问量：N/A';
+                }
+            }
+        })();
+    </script>
 </body>
 </html>
