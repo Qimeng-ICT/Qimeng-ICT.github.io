@@ -470,7 +470,7 @@
             line-height: 1.5;
             margin-bottom: 8px;
             display: -webkit-box;
-            -webkit-line-clamp: 4; /* 文本行数更少，降低高度 */
+            -webkit-line-clamp: 6; /* 文本行数更少，降低高度 */
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -702,6 +702,7 @@
         <p>An open-source project for automated, high-performance, and easily deployable IC full-stack design.</p>
         </div>
         <div id="visitCounter" class="visit-counter">总访问量：--</div>
+        
     </header>
 
     <!-- Main Content Section -->
@@ -713,7 +714,7 @@
                 <div class="overview-content">
                     <div class="overview-text">
                         <p>
-                            QiMeng aims to achieve fully automated design of the chip hardware/software stack by leveraging large language models (LLMs), agent and Boolean logic search technologies. QiMeng has achieved automated designing RISC-V CPUs, optimizing operating system configuration, transcompiling tensor programs and developing high-performance libraries, achieving performance that is comparable to human expertise.
+                            QiMeng aims to achieve fully automated design of the chip hardware/software stack by leveraging large language models (LLMs), agents, and Boolean logic search technologies. QiMeng has achieved automated designing RISC-V CPUs, optimizing operating system configuration, transcompiling tensor programs, and developing high-performance libraries, achieving performance that is comparable to human expertise.
                         </p>
                     </div>
                     
@@ -780,7 +781,7 @@
                                                 </svg>
                                                 GitHub <span class="github-stars"></span>
                                             </a>
-                                            <a href="https://arxiv.org/abs/2406.12345" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                            <a href="https://arxiv.org/abs/2306.12456" target="_blank" rel="noopener noreferrer" class="action-btn">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                                     <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -847,7 +848,7 @@
                             <article class="paper-card">
                                 <div class="card-content">
                                     <div class="left-column">
-                                        <img src="./src/codev.png" alt="CodeV Series Thumbnail" class="w-full h-auto">
+                                        <img src="./src/codev.gif" alt="CodeV Series Thumbnail" class="w-full h-auto">
                                     </div>
                                     <div class="middle-column">
                                         <h2 class="main-title"><a href="https://yyyangzhao.github.io/CodeV-Series/" target="_blank" rel="noopener noreferrer">CodeV: Empowering LLMs with HDL Generation through Multi-Level Summarization</a></h2>
@@ -1302,7 +1303,7 @@
                 }
             });
         });
-
+        
         // 简易前端计数器（基于 localStorage；部署到线上需改为服务端存储获取）
         (function() {
             try {
@@ -1321,6 +1322,9 @@
                 }
             }
         })();
+
+
+  
     </script>
 </body>
 </html>
