@@ -78,7 +78,7 @@
         .topbar-text {
             font-style: italic;
             color: #ffffff;
-            text-align: right;
+            text-align: center;
             white-space: nowrap;
         }
 
@@ -173,7 +173,7 @@
 
         .overview-text {
             flex: 0 0 auto;
-            max-width: 1000px; /* 控制段落宽度 */
+            max-width: 1100px; /* 控制段落宽度 */
             text-align: center;
         }
 
@@ -225,7 +225,7 @@
         .app-nav-panel::after { /* 垂直分割线（列3与列4之间，贯穿上下两行） */
             content: "";
             position: absolute;
-            left: 50%;
+            left: 33.9%;
             top: 12px;
             bottom: 12px;
             width: 2px;
@@ -691,7 +691,7 @@
             <div class="topbar-left">
                 <img class="topbar-logo" src="./src/title_logo.png" alt="ICT & ISCAS Logos">
             </div>
-            <div class="topbar-text">Intelligent Processor Research Center (IPRC), ICT, CAS</div>
+            <div class="topbar-text"><div>Intelligent Processor Research Center (IPRC), ICT, CAS</div><div>Intelligent Software Research Center (ISRC), IS, CAS</div></div>
         </div>
     </div>
 
@@ -701,7 +701,7 @@
         <h1>QiMeng: Fully Automated Hardware and Software Design for Processor Chip</h1>
         <p>An open-source project for automated, high-performance, and easily deployable IC full-stack design.</p>
         </div>
-        <div id="visitCounter" class="visit-counter">总访问量：--</div>
+        <!-- <div id="visitCounter" class="visit-counter">总访问量：--</div> -->
         
     </header>
 
@@ -714,7 +714,7 @@
                 <div class="overview-content">
                     <div class="overview-text">
                         <p>
-                            QiMeng aims to achieve fully automated design of the chip hardware/software stack by leveraging large language models (LLMs), agents, and Boolean logic search technologies. QiMeng has achieved automated designing RISC-V CPUs, optimizing operating system configuration, transcompiling tensor programs, and developing high-performance libraries, achieving performance that is comparable to human expertise.
+                            QiMeng aims to achieve fully automated design of the chip hardware/software stack by leveraging large language models (LLMs), agents, and Boolean logic generation technologies. QiMeng has successfully automated designing RISC-V CPUs, optimizing operating system configurations, transcompiling tensor programs, and developing high-performance libraries, with performance comparable to that of human expertise.
                         </p>
                     </div>
                     
@@ -726,9 +726,9 @@
             <!-- 应用导航面板 -->
             <div class="app-nav-panel">
                 <div class="app-nav-grid">
-                    <!-- 第一行：两个区域（各占三列） -->
-                    <a class="app-nav-btn" style="grid-column: 1 / span 3; grid-row: 1" href="#app-chip">Automated Chip Design</a>
-                    <a class="app-nav-btn" style="grid-column: 4 / span 3; grid-row: 1" href="#app-software">Automated Software Design</a>
+                    <!-- 第一行：两个区域 -->
+                    <a class="app-nav-btn" style="grid-column: 1 / span 2; grid-row: 1" href="#app-chip">Automated Chip Design</a>
+                    <a class="app-nav-btn" style="grid-column: 3 / span 4; grid-row: 1" href="#app-software">Automated Software Design</a>
 
                     <!-- 第二行：六等分，每列一个按钮，带竖线分隔 -->
                     <div class="app-row-2" style="grid-column: 1 / span 6; grid-row: 2; display: contents;">
@@ -825,7 +825,7 @@
                                                     <line x1="8" y1="2" x2="8" y2="6"></line>
                                                     <line x1="3" y1="10" x2="21" y2="10"></line>
                                                 </svg>
-                                                arXiv Page
+                                                Paper Link
                                             </a>
                                         </div>
                                     </div>
@@ -862,6 +862,10 @@
                                     <div class="right-column">
                                         <div class="conference">TCAD'25</div>
                                         <div class="action-buttons">
+                                            <a href="https://huggingface.co/collections/zhuyaoyu/codev-series" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                Hugging Face
+                                            </a>
                                             <a href="https://github.com/IPRC-DIP/CodeV" target="_blank" rel="noopener noreferrer" class="action-btn">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
@@ -898,6 +902,10 @@
                                     <div class="right-column">
                                         <div class="conference" style="font-size: 22px; height: auto;"> NeurIPS'25</div>
                                         <div class="action-buttons">
+                                            <a href="https://huggingface.co/collections/zhuyaoyu/codev-series" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                Hugging Face
+                                            </a>
                                             <a href="https://github.com/iprc-dip/CodeV-R1" target="_blank" rel="noopener noreferrer" class="action-btn">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
@@ -933,6 +941,10 @@
                                         <div class="conference" style="font-size: 22px; height: auto;"> NeurIPS'25</div>
                                         <div class="action-buttons"></div>
                                         <div class="action-buttons">
+                                            <a href="https://huggingface.co/TabCanNotTab/SALV-Qwen2.5-Coder-7B-Instruct" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                Hugging Face
+                                            </a>
                                             <a href="https://github.com/zy1xxx/SALV" target="_blank" rel="noopener noreferrer" class="action-btn">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
@@ -1219,7 +1231,12 @@
                         <p class="subcategory-intro" style="margin: 0 16px 10px 16px; color: var(--text-light-gray);">Tensor program transcompiler aims to automatically perform cross-platform tensor-program conversion.</p>
                         <div class="papers-container">
                             <!-- BabelTower -->
-                            <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/babeltower.png" alt="BabelTower Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title"><a href="https://kcxain.github.io/babeltower" target="_blank" rel="noopener noreferrer">BabelTower: Learning to Auto-parallelized Program Translation</a></h2> <div class="authors">Yuanbo Wen, Qi Guo, Qiang Fu, Xiaqing Li, Jianxing Xu, Yanlin Tang, Yongwei Zhao, Xing Hu, Zidong Du, Ling Li, Chao Wang, Xuehai Zhou, Yunji Chen</div> <p class="description">BabelTower is a learning-based framework that automatically translates sequential C code into parallel CUDA code. By leveraging large-scale corpora and back-translation with discriminative reranking, it achieves up to 347× speedup and greatly improves developer productivity.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">ICML'22</div> <div class="action-buttons"> <a href="https://github.com/IPRC-ICT/BabelTower" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://proceedings.mlr.press/v162/wen22b/wen22b.pdf" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a> </div> </div> </div> </article>
+                            <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/babeltower.png" alt="BabelTower Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title"><a href="https://kcxain.github.io/babeltower" target="_blank" rel="noopener noreferrer">BabelTower: Learning to Auto-parallelized Program Translation</a></h2> <div class="authors">Yuanbo Wen, Qi Guo, Qiang Fu, Xiaqing Li, Jianxing Xu, Yanlin Tang, Yongwei Zhao, Xing Hu, Zidong Du, Ling Li, Chao Wang, Xuehai Zhou, Yunji Chen</div> <p class="description">BabelTower is a learning-based framework that automatically translates sequential C code into parallel CUDA code. By leveraging large-scale corpora and back-translation with discriminative reranking, it achieves up to 347× speedup and greatly improves developer productivity.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">ICML'22</div> <div class="action-buttons"> 
+                                <a href="https://huggingface.co/datasets/kcxain/BabelTower" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                    <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
+                                    Hugging Face
+                                </a> 
+                                <a href="https://github.com/IPRC-ICT/BabelTower" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://proceedings.mlr.press/v162/wen22b/wen22b.pdf" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a> </div> </div> </div> </article>
 
                             <!-- QiMeng-Xpiler -->
                             <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/xpiler.png" alt="QiMeng-Xpiler Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title" style="font-size: 24px;"><a href="https://kcxain.github.io/QiMeng-Xpiler" target="_blank" rel="noopener noreferrer">QiMeng-Xpiler: Transcompiling Tensor Programs for Deep Learning Systems with a Neural-Symbolic Approach</a></h2> <div class="authors">Shouyang Dong, Yuanbo Wen, Jun Bi, Di Huang, Jiaming Guo, Jianxing Xu, Ruibai Xu, Xinkai Song, Yifan Hao, Xuehai Zhou, Tianshi Chen, Qi Guo, Yunji Chen</div> <p class="description">QiMeng-Xpiler is a neural-symbolic transcompiler that automatically translates tensor programs across heterogeneous deep learning systems such as GPUs, ASICs, and MLUs. It integrates LLMs with symbolic program synthesis to ensure both correctness and efficiency. By leveraging LLM-assisted compilation passes and hierarchical auto-tuning, QiMeng-Xpiler achieves up to 95% translation accuracy and 2× performance over vendor-optimized libraries.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">OSDI'25</div> <div class="action-buttons"> <a href="https://github.com/kcxain/QiMeng-Xpiler/" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://arxiv.org/pdf/2505.02146" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>arXiv Page</a> </div> </div> </div> </article>
@@ -1304,24 +1321,7 @@
             });
         });
         
-        // 简易前端计数器（基于 localStorage；部署到线上需改为服务端存储获取）
-        (function() {
-            try {
-                const key = 'qimeng_total_visit_count';
-                const current = parseInt(localStorage.getItem(key) || '0', 10);
-                const next = isNaN(current) ? 1 : current + 1;
-                localStorage.setItem(key, String(next));
-                const el = document.getElementById('visitCounter');
-                if (el) {
-                    el.textContent = '总访问量：' + next.toLocaleString();
-                }
-            } catch (e) {
-                const el = document.getElementById('visitCounter');
-                if (el) {
-                    el.textContent = '总访问量：N/A';
-                }
-            }
-        })();
+
 
 
   
