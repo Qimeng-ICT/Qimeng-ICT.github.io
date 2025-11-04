@@ -67,12 +67,14 @@
         .topbar-left {
             display: flex;
             align-items: center;
-            gap: 8px;
         }
 
         .topbar-logo {
-            height: 40px; /* 稍大以更协调 */
+            height: 80px; /* 确保所有logo高度一致 */
             width: auto;
+            max-height: 80px;
+            object-fit: contain;
+            display: block;
         }
 
         .topbar-text {
@@ -80,6 +82,10 @@
             color: #ffffff;
             text-align: center;
             white-space: nowrap;
+        }
+
+        .topbar-text > div {
+            line-height: 2.2;
         }
 
         /* 头部样式 */
@@ -151,6 +157,9 @@
             max-width: 1280px;
             margin: 0 auto;
             padding: 20px;
+            box-sizing: border-box;
+            width: 100%;
+            overflow-x: hidden; /* 防止水平滚动 */
         }
 
         /* 概述部分样式 */
@@ -258,6 +267,8 @@
             border-radius: 0px;
             transition: all 0.2s; /* 过渡动画覆盖颜色和下划线 */
             box-sizing: border-box;
+            font-size: clamp(0.75rem, 1.1vw, 1rem); /* 响应式字体大小，随屏幕缩放 */
+            line-height: 1.3;
         }
 
         /* 鼠标悬停时：强化链接交互感 */
@@ -301,7 +312,7 @@
         }
         .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(1),
         .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(2) {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 1.4vw, 1.2rem); /* 第一行按钮响应式字体 */
             font-weight: bold; /* 字体加粗 */
         }
 
@@ -390,6 +401,9 @@
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             transition: var(--transition-default);
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 100%;
         }
 
         .paper-card:hover {
@@ -400,6 +414,8 @@
             display: flex;
             flex-wrap: wrap;
             min-height: 200px; /* 收窄卡片最小高度 */
+            width: 100%;
+            box-sizing: border-box;
         }
 
 
@@ -412,6 +428,8 @@
             align-items: center; /* 垂直居中 */
             justify-content: center; /* 水平居中 */
             min-height: 180px; /* 可选：给容器一个最小高度，避免图片过小时容器过矮 */
+            box-sizing: border-box;
+            max-width: 100%;
         }
 
         /* 图片样式：完整显示、自适应缩放、居中 */
@@ -438,6 +456,10 @@
         .middle-column {
             flex: 0 0 56%;
             padding: 12px 20px; /* 中列更紧凑 */
+            box-sizing: border-box;
+            max-width: 100%;
+            overflow-wrap: break-word; /* 确保长文本换行 */
+            word-wrap: break-word;
         }
 
         .main-title {
@@ -518,11 +540,14 @@
             box-sizing: border-box; /* 解决之前的空隙问题 */
             margin: 0;
             width: 100%;
+            max-width: 100%;
         }
 
-        /* 会议标签样式（修改文本右对齐） */
+        /* 会议标签样式（确保文字居中） */
         .conference {
-            display: block;
+            display: flex;
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
             height: 80px;  
             background-color: var(--conference-bg);
             color: var(--conference-text);
@@ -530,10 +555,11 @@
             padding: 20px 25px;
             border-radius: 8px;
             font-size: 22px;
-            text-align: center; /* 2. 标签文本右对齐 */
+            text-align: center; /* 文字居中对齐 */
             border: 1px solid #d1e5fe;
             margin-bottom: 50px;
             width: 100%; /* 保持占满宽度 */
+            box-sizing: border-box;
         }
 
         /* 操作按钮组（关键修改：取消居中，继承右对齐） */
@@ -597,10 +623,28 @@
 
         /* 响应式调整 */
         @media (max-width: 1024px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .app-nav-btn {
+                font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            }
+            .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(1),
+            .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(2) {
+                font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+            }
+            
+            .paper-card {
+                margin: 0;
+                width: 100%;
+            }
+            
             .left-column, .middle-column, .right-column {
                 flex: 0 0 100%;
                 border-right: none;
                 border-bottom: 1px solid var(--border-color);
+                max-width: 100%;
             }
             .right-column {
                 border-bottom: none;
@@ -610,10 +654,14 @@
                 padding: 15px 20px;
             }
             .conference {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 margin-right: auto;
                 margin-bottom: 0;
                 font-size: 16px;
                 padding: 8px 12px;
+                height: auto;
             }
             .action-buttons {
                 flex-direction: row;
@@ -628,6 +676,34 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+            
+            .paper-card {
+                width: 100%;
+                margin: 0;
+            }
+            
+            .middle-column {
+                padding: 12px 15px;
+            }
+            
+            .app-nav-btn {
+                font-size: clamp(0.65rem, 1.1vw, 0.85rem);
+                padding: 0 6px;
+            }
+            .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(1),
+            .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(2) {
+                font-size: clamp(0.8rem, 1.2vw, 1rem);
+            }
+            .app-nav-grid {
+                grid-template-rows: 45px 55px;
+            }
+            .app-row-2 .app-nav-btn {
+                height: 55px;
+            }
+            
             header h1 {
                 font-size: 1.8rem;
             }
@@ -649,6 +725,9 @@
                 align-items: stretch;
             }
             .conference {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 margin-right: 0;
                 margin-bottom: 10px;
             }
@@ -662,6 +741,42 @@
         }
 
         @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .paper-card {
+                width: 100%;
+                margin: 0;
+            }
+            
+            .middle-column {
+                padding: 10px 12px;
+            }
+            
+            .left-column {
+                padding: 6px;
+            }
+            
+            .right-column {
+                padding: 8px 10px;
+            }
+            
+            .app-nav-btn {
+                font-size: clamp(0.6rem, 1vw, 0.75rem);
+                padding: 0 4px;
+            }
+            .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(1),
+            .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(2) {
+                font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+            }
+            .app-nav-grid {
+                grid-template-rows: 40px 50px;
+            }
+            .app-row-2 .app-nav-btn {
+                height: 50px;
+            }
+            
             header h1 {
                 font-size: 1.6rem;
             }
@@ -674,6 +789,9 @@
                 font-size: 14px;
             }
             .conference {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 font-size: 12px;
             }
 
@@ -689,9 +807,12 @@
     <div class="topbar">
         <div class="topbar-content">
             <div class="topbar-left">
-                <img class="topbar-logo" src="./src/title_logo.png" alt="ICT & ISCAS Logos">
+                <img class="topbar-logo" src="./src/logos_white_edge.png" alt="Logos">
             </div>
-            <div class="topbar-text"><div>Intelligent Processor Research Center (IPRC), ICT, CAS</div><div>Intelligent Software Research Center (ISRC), IS, CAS</div></div>
+            <div class="topbar-text">
+                <div>Intelligent Processor Research Center (IPRC), SKLP, ICT, CAS</div>
+                <div>Intelligent Computing Group, ISRC, IS, CAS</div>
+            </div>
         </div>
     </div>
 
@@ -871,7 +992,7 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                                                 </svg>
-                                                GitHub <span class="github-stars"></span>
+                                            GitHub <span class="github-stars"></span>
                                             </a>
                                             <a href="https://arxiv.org/abs/2510.19296" target="_blank" rel="noopener noreferrer" class="action-btn">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -954,9 +1075,9 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                                                 </svg>
-                                            GitHub <span class="github-stars"></span>
+                                                GitHub <span class="github-stars"></span>
                                             </a>
-                                            <a href="https://arxiv.org/abs/2505.24183" target="_blank" rel="noopener noreferrer" class="action-btn">
+                                            <a href="https://arxiv.org/abs/2407.10424" target="_blank" rel="noopener noreferrer" class="action-btn">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                                     <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -994,7 +1115,7 @@
                                 <img src="./src/auto-os.png" alt="AutoOS Thumbnail" class="w-full h-auto">
                                     </div>
                                     <div class="middle-column">
-                                <h2 class="main-title"><a href="https://xuewuyinhe.github.io/AutoOS/" target="_blank" rel="noopener noreferrer">AutoOS：Make your OS more powerful by exploiting large language models</a></h2>
+                                <h2 class="main-title"><a href="https://xuewuyinhe.github.io/AutoOS/" target="_blank" rel="noopener noreferrer">AutoOS：Make Your OS More Powerful by Exploiting Large Language Models</a></h2>
                                 <div class="authors">Huilai Chen, Yuanbo Wen, Limin Cheng, Shouxu Kuang, Yumeng Liu, Weijia Li, Ling Li, Rui Zhang, Xinkai Song, Wei Li, Qi Guo, Yunji Chen</div>
                                         <p class="description">
                                     AutoOS is the first framework designed to optimize the Linux kernel configurations of specific OS distributions on certain hardware without human intervention using LLMs, primarily for AIoT scenarios.
@@ -1123,9 +1244,9 @@
                     <div class="subcategory-content" style="max-height: 1000px;">
                         <p class="subcategory-intro" style="margin: 0 16px 10px 16px; color: var(--text-light-gray);">Compiler generation aims to leverage LLMs to complete automated compiler generation tasks.</p>
                         <div class="papers-container">
-                            
+
                             <!-- Placeholder: QiMeng-NeuComBack（方海南） -->
-                             <article class="paper-card">
+                            <article class="paper-card">
                                 <div class="card-content">
                                     <div class="left-column">
                                         <img src="./src/neu-comback.png" alt="ComBack Thumbnail" class="w-full h-auto">
@@ -1193,7 +1314,7 @@
                             
 
                             <!-- VEGA -->
-                            <article class="paper-card">
+                             <article class="paper-card">
                                 <div class="card-content">
                                     <div class="left-column">
                                         <img src="./src/vega.png" alt="VEGA Thumbnail" class="w-full h-auto">
@@ -1227,8 +1348,8 @@
                                 </div>
                             </article>
 
-                            <!-- ATG -->
-                            <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/atg.png" alt="ATG Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title" style="font-size: 28px;"><a href="https://wihn2021.github.io/atg-web/" target="_blank" rel="noopener noreferrer">ATG: Automatic Target Description File Generation</a></h2> <div class="authors">Hong-Na Geng, Fang Lyu, Ming Zhong, Hui-Min Cui, Jingling Xue, Xiao-Bing Feng</div> <p class="description">ATG accelerates compiler retargeting by automating the slow creation of target description files for new hardware. It synthesizes templates from similar ISAs, allowing developers to simply define new instructions in tables using these TSPs.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">JCST'23</div> <div class="action-buttons"> <a href="https://github.com/agilecompiler/agilecompiler" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://link.springer.com/article/10.1007/s11390-022-1919-x" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a> </div> </div> </div> </article>
+                            <!-- ATG
+                            <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/atg.png" alt="ATG Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title" style="font-size: 28px;"><a href="https://wihn2021.github.io/atg-web/" target="_blank" rel="noopener noreferrer">ATG: Automatic Target Description File Generation</a></h2> <div class="authors">Hong-Na Geng, Fang Lyu, Ming Zhong, Hui-Min Cui, Jingling Xue, Xiao-Bing Feng</div> <p class="description">ATG accelerates compiler retargeting by automating the slow creation of target description files for new hardware. It synthesizes templates from similar ISAs, allowing developers to simply define new instructions in tables using these TSPs.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">JCST'23</div> <div class="action-buttons"> <a href="https://github.com/agilecompiler/agilecompiler" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://link.springer.com/article/10.1007/s11390-022-1919-x" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a> </div> </div> </div> </article> -->
 
 
 
@@ -1252,7 +1373,7 @@
                             <article class="paper-card"> 
                             <div class="card-content"> 
                                 <div class="left-column"> 
-                                <img src="./src/mupa.png" alt="QiMeng-Xpiler Thumbnail" class="w-full h-auto"> 
+                                <img src="./src/mupa.png" alt="QiMeng-MuPa Thumbnail" class="w-full h-auto"> 
                                 </div> 
                                 <div class="middle-column"> 
                                 <h2 class="main-title"><a href="https://kcxain.github.io/mupa" target="_blank" rel="noopener noreferrer">QiMeng-MuPa: Mutual-Supervised Learning for Sequential-to-Parallel Code Translation</a></h2> 
@@ -1291,7 +1412,7 @@
                             
 
                             <!-- QiMeng-Xpiler -->
-                            <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/xpiler.png" alt="QiMeng-Xpiler Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title" style="font-size: 24px;"><a href="https://kcxain.github.io/QiMeng-Xpiler" target="_blank" rel="noopener noreferrer">QiMeng-Xpiler: Transcompiling Tensor Programs for Deep Learning Systems with a Neural-Symbolic Approach</a></h2> <div class="authors">Shouyang Dong, Yuanbo Wen, Jun Bi, Di Huang, Jiaming Guo, Jianxing Xu, Ruibai Xu, Xinkai Song, Yifan Hao, Xuehai Zhou, Tianshi Chen, Qi Guo, Yunji Chen</div> <p class="description">QiMeng-Xpiler is a neural-symbolic transcompiler that automatically translates tensor programs across heterogeneous deep learning systems such as GPUs, ASICs, and MLUs. It integrates LLMs with symbolic program synthesis to ensure both correctness and efficiency. By leveraging LLM-assisted compilation passes and hierarchical auto-tuning, QiMeng-Xpiler achieves up to 95% translation accuracy and 2× performance over vendor-optimized libraries.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">OSDI'25</div> <div class="action-buttons"> <a href="https://github.com/kcxain/QiMeng-Xpiler/" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://arxiv.org/pdf/2505.02146" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>arXiv Page</a> </div> </div> </div> </article>
+                            <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/xpiler.png" alt="QiMeng-Xpiler Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title" style="font-size: 24px;"><a href="https://kcxain.github.io/QiMeng-Xpiler" target="_blank" rel="noopener noreferrer">QiMeng-Xpiler: Transcompiling Tensor Programs for Deep Learning Systems with a Neural-Symbolic Approach</a></h2> <div class="authors">Shouyang Dong, Yuanbo Wen, Jun Bi, Di Huang, Jiaming Guo, Jianxing Xu, Ruibai Xu, Xinkai Song, Yifan Hao, Xuehai Zhou, Tianshi Chen, Qi Guo, Yunji Chen</div> <p class="description">QiMeng-Xpiler is a neural-symbolic transcompiler that automatically translates tensor programs across heterogeneous deep learning systems such as GPUs, ASICs, and MLUs. It integrates LLMs with symbolic program synthesis to ensure both correctness and efficiency. By leveraging LLM-assisted compilation passes and hierarchical auto-tuning, QiMeng-Xpiler achieves up to 95% translation accuracy and 2× performance over vendor-optimized libraries.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">OSDI'25</div> <div class="action-buttons"> <a href=" https://github.com/ShouyangDong/QiMeng-xpiler" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://www.usenix.org/system/files/osdi25-dong.pdf" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a> </div> </div> </div> </article>
 
                             <!-- BabelTower -->
                             <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/babeltower.png" alt="BabelTower Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title"><a href="https://kcxain.github.io/babeltower" target="_blank" rel="noopener noreferrer">BabelTower: Learning to Auto-parallelized Program Translation</a></h2> <div class="authors">Yuanbo Wen, Qi Guo, Qiang Fu, Xiaqing Li, Jianxing Xu, Yanlin Tang, Yongwei Zhao, Xing Hu, Zidong Du, Ling Li, Chao Wang, Xuehai Zhou, Yunji Chen</div> <p class="description">BabelTower is a learning-based framework that automatically translates sequential C code into parallel CUDA code. By leveraging large-scale corpora and back-translation with discriminative reranking, it achieves up to 347× speedup and greatly improves developer productivity.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">ICML'22</div> <div class="action-buttons"> 
@@ -1342,19 +1463,90 @@
         });
         
 
+        // 访问量计数器 - 使用 CORS 代理解决跨域问题
         (async function() {
-        const el = document.getElementById('visitCounter');
-        try {
-            const res = await fetch('https://visit-counter-api.vercel.app/api/visit', { method: 'POST' });
-            const data = await res.json();
-            el.textContent = '总访问量：' + data.total.toLocaleString();
-        } catch (e) {
-            el.textContent = '总访问量：N/A';
-        }
+            const el = document.getElementById('visitCounter');
+            if (!el) return;
+            
+            // 尝试多个 CORS 代理，按顺序尝试
+            const proxyUrls = [
+                'https://api.allorigins.win/raw?url=',
+                'https://corsproxy.io/?',
+                'https://api.codetabs.com/v1/proxy?quest='
+            ];
+            
+            const targetUrl = 'https://yongwei.site/qimeng-counter';
+            
+            // 首先尝试直接请求
+            async function tryDirectFetch() {
+                try {
+                    const res = await fetch(targetUrl, { 
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'no-cache'
+                    });
+                    if (res.ok) {
+                        const text = await res.text();
+                        const count = parseInt(text.trim());
+                        if (!isNaN(count) && count >= 0) {
+                            return count;
+                        }
+                    }
+                } catch (e) {
+                    // 直接请求失败，继续尝试代理
+                }
+                return null;
+            }
+            
+            // 尝试通过代理获取
+            async function tryProxyFetch(proxyUrl) {
+                try {
+                    const proxyFullUrl = proxyUrl + encodeURIComponent(targetUrl);
+                    const res = await fetch(proxyFullUrl, { 
+                        method: 'GET',
+                        cache: 'no-cache'
+                    });
+                    
+                    if (res.ok) {
+                        const text = await res.text();
+                        const count = parseInt(text.trim());
+                        if (!isNaN(count) && count >= 0) {
+                            return count;
+                        }
+                    }
+                } catch (e) {
+                    console.warn('代理请求失败:', proxyUrl, e);
+                }
+                return null;
+            }
+            
+            try {
+                // 先尝试直接请求
+                let count = await tryDirectFetch();
+                
+                // 如果直接请求失败，尝试使用代理
+                if (count === null) {
+                    for (const proxyUrl of proxyUrls) {
+                        count = await tryProxyFetch(proxyUrl);
+                        if (count !== null) {
+                            console.log('通过代理成功获取访问量:', proxyUrl);
+                            break;
+                        }
+                    }
+                }
+                
+                // 显示结果
+                if (count !== null && count >= 0) {
+                    el.textContent = '总访问量：' + count.toLocaleString();
+                } else {
+                    console.error('所有请求方式都失败了');
+                    el.textContent = '总访问量：--';
+                }
+            } catch (e) {
+                console.error('访问量计数器错误:', e);
+                el.textContent = '总访问量：--';
+            }
         })();
-
-
-
   
     </script>
 </body>
