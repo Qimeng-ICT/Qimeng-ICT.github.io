@@ -1489,7 +1489,7 @@
                         const text = await res.text();
                         const count = parseInt(text.trim());
                         if (!isNaN(count) && count >= 0) {
-                            return count;
+                            return Math.floor(count / 2); // 除以2并向下取整，确保返回整数
                         }
                     }
                 } catch (e) {
@@ -1511,7 +1511,7 @@
                         const text = await res.text();
                         const count = parseInt(text.trim());
                         if (!isNaN(count) && count >= 0) {
-                            return count;
+                            return Math.ceil(count / 2); // 除以2并向上取整，确保返回整数
                         }
                     }
                 } catch (e) {
