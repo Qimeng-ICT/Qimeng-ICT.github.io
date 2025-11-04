@@ -70,9 +70,9 @@
         }
 
         .topbar-logo {
-            height: 80px; /* 确保所有logo高度一致 */
+            height: clamp(40px, 6vw, 80px); /* 响应式高度，随页面缩放 */
             width: auto;
-            max-height: 80px;
+            max-height: clamp(40px, 6vw, 80px);
             object-fit: contain;
             display: block;
         }
@@ -82,6 +82,7 @@
             color: #ffffff;
             text-align: center;
             white-space: nowrap;
+            font-size: clamp(0.85rem, 1.2vw, 1rem); /* 响应式字体大小 */
         }
 
         .topbar-text > div {
@@ -554,12 +555,17 @@
             font-weight: 1000;
             padding: 20px 25px;
             border-radius: 8px;
-            font-size: 22px;
+            font-size: clamp(18px, 1.5vw, 22px); /* 响应式字体大小，覆盖内联样式 */
             text-align: center; /* 文字居中对齐 */
             border: 1px solid #d1e5fe;
             margin-bottom: 50px;
             width: 100%; /* 保持占满宽度 */
             box-sizing: border-box;
+        }
+        
+        /* 覆盖内联样式中的固定字体大小，使其响应式 */
+        .conference[style*="font-size: 22px"] {
+            font-size: clamp(18px, 1.5vw, 22px) !important;
         }
 
         /* 操作按钮组（关键修改：取消居中，继承右对齐） */
@@ -659,9 +665,18 @@
                 justify-content: center;
                 margin-right: auto;
                 margin-bottom: 0;
-                font-size: 16px;
+                font-size: clamp(14px, 1.2vw, 16px) !important; /* 响应式字体，覆盖内联样式 */
                 padding: 8px 12px;
                 height: auto;
+            }
+            
+            .topbar-text {
+                font-size: clamp(0.75rem, 1vw, 0.9rem); /* 响应式字体 */
+            }
+            
+            .topbar-logo {
+                height: clamp(35px, 5vw, 60px); /* 响应式logo高度 */
+                max-height: clamp(35px, 5vw, 60px);
             }
             .action-buttons {
                 flex-direction: row;
@@ -730,6 +745,16 @@
                 justify-content: center;
                 margin-right: 0;
                 margin-bottom: 10px;
+                font-size: clamp(14px, 1.1vw, 16px) !important; /* 响应式字体，覆盖内联样式 */
+            }
+            
+            .topbar-text {
+                font-size: clamp(0.7rem, 0.9vw, 0.85rem); /* 响应式字体 */
+            }
+            
+            .topbar-logo {
+                height: clamp(30px, 4vw, 50px); /* 响应式logo高度 */
+                max-height: clamp(30px, 4vw, 50px);
             }
             .action-buttons {
                 flex-direction: column;
@@ -792,11 +817,16 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 12px;
+                font-size: clamp(11px, 1vw, 12px) !important; /* 响应式字体，覆盖内联样式 */
+            }
+            
+            .topbar-text {
+                font-size: clamp(0.65rem, 0.8vw, 0.75rem); /* 响应式字体 */
             }
 
             .topbar-logo {
-                height: 26px; /* 移动端稍小 */
+                height: clamp(26px, 3.5vw, 40px); /* 响应式logo高度，移动端 */
+                max-height: clamp(26px, 3.5vw, 40px);
             }
         }
     </style>
@@ -981,7 +1011,7 @@
                                         <div class="meta-info"></div>
                                     </div>
                                     <div class="right-column">
-                                        <div class="conference" style="font-size: 22px; height: auto;"> NeurIPS'25</div>
+                                        <div class="conference" style="height: auto;"> NeurIPS'25</div>
                                         <div class="action-buttons"></div>
                                         <div class="action-buttons">
                                             <a href="https://huggingface.co/TabCanNotTab/SALV-Qwen2.5-Coder-7B-Instruct" target="_blank" rel="noopener noreferrer" class="action-btn">
@@ -1023,7 +1053,7 @@
                                         <div class="meta-info"></div>
                                     </div>
                                     <div class="right-column">
-                                        <div class="conference" style="font-size: 22px; height: auto;"> NeurIPS'25</div>
+                                        <div class="conference" style="height: auto;"> NeurIPS'25</div>
                                         <div class="action-buttons">
                                             <a href="https://huggingface.co/collections/zhuyaoyu/codev-series" target="_blank" rel="noopener noreferrer" class="action-btn">
                                                 <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
@@ -1465,7 +1495,7 @@
 
         // 访问量计数器 - 使用 CORS 代理解决跨域问题
         (async function() {
-            const el = document.getElementById('visitCounter');
+                const el = document.getElementById('visitCounter');
             if (!el) return;
             
             // 尝试多个 CORS 代理，按顺序尝试
@@ -1491,8 +1521,8 @@
                         if (!isNaN(count) && count >= 0) {
                             return Math.floor(count / 2); // 除以2并向下取整，确保返回整数
                         }
-                    }
-                } catch (e) {
+                }
+            } catch (e) {
                     // 直接请求失败，继续尝试代理
                 }
                 return null;
