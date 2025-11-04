@@ -227,26 +227,29 @@
             position: absolute;
             left: 24px;
             right: 24px;
-            top: calc(40%);
+            top: calc(45% - 5px); /* 向下移动，根据第一行高度调整 */
             height: 1px;
             background: var(--panel-line);
         }
 
-        .app-nav-panel::after { /* 垂直分割线（列3与列4之间，贯穿上下两行） */
+        .app-nav-panel::after { /* 垂直分割线（列2与列3之间，贯穿上下两行） */
             content: "";
             position: absolute;
-            left: 33.9%;
+            /* 精确对齐：6列等分，第2列和第3列之间是 2/6 = 33.333% */
+            /* 由于分割线宽度2px，需要减去1px使其居中 */
+            left: calc(33.8%);
             top: 12px;
             bottom: 12px;
             width: 2px;
             background: var(--panel-line);
-            transform: translateX(-0.5px);
+            /* 使用 box-sizing 确保精确对齐 */
+            box-sizing: border-box;
         }
 
         .app-nav-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            grid-template-rows: 50px 62px;
+            grid-template-rows: clamp(60px, 6vw, 70px) clamp(70px, 6.5vw, 80px); /* 第一行高度增加以容纳文字，第二行高度增加以容纳四行文字 */
             align-items: center;
             text-align: center;
             gap: 0;
@@ -259,8 +262,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 10px;
-            height: 48px;
+            padding: 0 clamp(6px, 1vw, 10px); /* 响应式内边距，随页面缩放 */
+            height: clamp(60px, 4.8vw, 70px); /* 响应式高度，随页面缩放 */
             color: var(--primary); /* 用主题主色作为链接默认色（区别于普通文本） */
             text-decoration: underline; /* 下划线是链接的典型特征 */
             text-underline-offset: 4px; /* 下划线与文本保持一定距离，更美观 */
@@ -287,7 +290,7 @@
         /* 第二行按钮保持一致样式 */
         .app-row-2 .app-nav-btn {
             /* 保留原有样式 */
-            height: 60px;
+            height: clamp(70px, 6.5vw, 80px); /* 响应式高度，增加最小高度以容纳四行文字 */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -306,15 +309,18 @@
 
         
 
-        /* 保持第一行的位置调整（作用于网格项） */
-        .app-nav-grid > :nth-child(-n+6) {
-            align-self: start;
-            margin-top: -5px;
-        }
+        /* 第一行按钮居中显示 */
         .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(1),
         .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(2) {
             font-size: clamp(0.9rem, 1.4vw, 1.2rem); /* 第一行按钮响应式字体 */
             font-weight: bold; /* 字体加粗 */
+            align-self: center; /* 按钮在行内垂直居中 */
+            margin-top: clamp(-10px, -0.4vw, -12px); /* 向上移动更多，响应式调整 */
+            display: flex; /* 确保flex布局 */
+            align-items: center; /* 文字垂直居中 */
+            justify-content: center; /* 文字水平居中 */
+            text-align: center; /* 文字居中对齐 */
+            height: clamp(40px, 3vw, 70px); /* 增加高度以容纳文字，避免超出 */
         }
 
 
@@ -327,6 +333,10 @@
             border-left: 1px solid var(--panel-line);
         }
         .app-row-2 .app-nav-btn:first-child {
+            border-left: none;
+        }
+        /* 去掉第二行第二和第三个按钮之间的分割线 */
+        .app-row-2 .app-nav-btn:nth-child(3) {
             border-left: none;
         }
 
@@ -634,11 +644,19 @@
             }
             
             .app-nav-btn {
-                font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+                font-size: clamp(0.7rem, 1.2vw, 0.9rem); /* 响应式字体 */
+                padding: 0 clamp(5px, 0.9vw, 8px); /* 响应式内边距 */
+                height: clamp(35px, 4.5vw, 45px); /* 响应式高度 */
             }
             .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(1),
             .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(2) {
-                font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+                font-size: clamp(0.85rem, 1.3vw, 1.1rem); /* 第一行按钮响应式字体 */
+            }
+            .app-nav-grid {
+                grid-template-rows: clamp(45px, 5.5vw, 55px) clamp(65px, 6vw, 75px); /* 第一行高度增加，第二行高度增加以容纳四行文字 */
+            }
+            .app-row-2 .app-nav-btn {
+                height: clamp(65px, 6vw, 75px); /* 响应式高度，增加最小高度以容纳四行文字 */
             }
             
             .paper-card {
@@ -705,18 +723,19 @@
             }
             
             .app-nav-btn {
-                font-size: clamp(0.65rem, 1.1vw, 0.85rem);
-                padding: 0 6px;
+                font-size: clamp(0.65rem, 1.1vw, 0.85rem); /* 响应式字体 */
+                padding: 0 clamp(4px, 0.8vw, 6px); /* 响应式内边距 */
+                height: clamp(32px, 4vw, 40px); /* 响应式高度 */
             }
             .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(1),
             .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(2) {
-                font-size: clamp(0.8rem, 1.2vw, 1rem);
+                font-size: clamp(0.8rem, 1.2vw, 1rem); /* 第一行按钮响应式字体 */
             }
             .app-nav-grid {
-                grid-template-rows: 45px 55px;
+                grid-template-rows: clamp(40px, 5vw, 48px) clamp(60px, 5.5vw, 70px); /* 第一行高度增加，第二行高度增加以容纳四行文字 */
             }
             .app-row-2 .app-nav-btn {
-                height: 55px;
+                height: clamp(60px, 5.5vw, 70px); /* 响应式高度，增加最小高度以容纳四行文字 */
             }
             
             header h1 {
@@ -788,18 +807,19 @@
             }
             
             .app-nav-btn {
-                font-size: clamp(0.6rem, 1vw, 0.75rem);
-                padding: 0 4px;
+                font-size: clamp(0.6rem, 1vw, 0.75rem); /* 响应式字体 */
+                padding: 0 clamp(3px, 0.7vw, 4px); /* 响应式内边距 */
+                height: clamp(28px, 3.5vw, 36px); /* 响应式高度 */
             }
             .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(1),
             .app-nav-panel .app-nav-grid > .app-nav-btn:nth-child(2) {
-                font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+                font-size: clamp(0.75rem, 1.1vw, 0.9rem); /* 第一行按钮响应式字体 */
             }
             .app-nav-grid {
-                grid-template-rows: 40px 50px;
+                grid-template-rows: clamp(36px, 4.5vw, 44px) clamp(55px, 5vw, 65px); /* 第一行高度增加，第二行高度增加以容纳四行文字 */
             }
             .app-row-2 .app-nav-btn {
-                height: 50px;
+                height: clamp(55px, 5vw, 65px); /* 响应式高度，增加最小高度以容纳四行文字 */
             }
             
             header h1 {
@@ -1308,7 +1328,7 @@
 
 
                             <!-- VEGA -->
-                             <article class="paper-card">
+                            <article class="paper-card">
                                 <div class="card-content">
                                     <div class="left-column">
                                         <img src="./src/vega.png" alt="VEGA Thumbnail" class="w-full h-auto">
@@ -1386,7 +1406,7 @@
 
 
 
-                        </div>
+                                    </div>
                     </div>
                 </div>
                             
