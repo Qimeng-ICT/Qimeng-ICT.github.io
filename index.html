@@ -82,7 +82,7 @@
             color: #ffffff;
             text-align: center;
             white-space: nowrap;
-            font-size: 1.2vw; /* 完全响应式字体，随页面缩放，无最小限制 */
+            font-size: clamp(0.9rem, 1.2vw, 1.2rem); /* 响应式字体大小 */
         }
 
         .topbar-text > div {
@@ -671,7 +671,7 @@
             }
             
             .topbar-text {
-                font-size: 1vw; /* 完全响应式字体，随页面缩放 */
+                font-size: clamp(0.75rem, 0.75vw, 0.9rem); /* 响应式字体 */
             }
             
             .topbar-logo {
@@ -749,7 +749,7 @@
             }
             
             .topbar-text {
-                font-size: 0.9vw; /* 完全响应式字体，随页面缩放 */
+                font-size: clamp(0.5rem, 0.5vw, 0.75rem); /* 响应式字体 */
             }
             
             .topbar-logo {
@@ -821,8 +821,9 @@
             }
             
             .topbar-text {
-                font-size: 0.8vw; /* 完全响应式字体，随页面缩放 */
+                font-size: clamp(0.3rem, 0.25vw, 0.5rem); /* 响应式字体 */
             }
+            
 
             .topbar-logo {
                 height: clamp(26px, 3.5vw, 40px); /* 响应式logo高度，移动端 */
@@ -1015,7 +1016,7 @@
                                         <div class="action-buttons"></div>
                                         <div class="action-buttons">
                                             <a href="https://huggingface.co/TabCanNotTab/SALV-Qwen2.5-Coder-7B-Instruct" target="_blank" rel="noopener noreferrer" class="action-btn">
-                                                <img src="./src/huggingface.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
                                                 Hugging Face
                                             </a>
                                             <a href="https://github.com/zy1xxx/SALV" target="_blank" rel="noopener noreferrer" class="action-btn">
@@ -1056,7 +1057,7 @@
                                         <div class="conference" style="height: auto;"> NeurIPS'25</div>
                                         <div class="action-buttons">
                                             <a href="https://huggingface.co/collections/zhuyaoyu/codev-series" target="_blank" rel="noopener noreferrer" class="action-btn">
-                                                <img src="./src/huggingface.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
                                                 Hugging Face
                                             </a>
                                             <a href="https://github.com/iprc-dip/CodeV-R1" target="_blank" rel="noopener noreferrer" class="action-btn">
@@ -1098,7 +1099,7 @@
                                         <div class="conference">TCAD'25</div>
                                         <div class="action-buttons">
                                             <a href="https://huggingface.co/collections/zhuyaoyu/codev-series" target="_blank" rel="noopener noreferrer" class="action-btn">
-                                                <img src="./src/huggingface.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
                                                 Hugging Face
                                             </a>
                                             <a href="https://github.com/IPRC-DIP/CodeV" target="_blank" rel="noopener noreferrer" class="action-btn">
@@ -1323,7 +1324,7 @@
                                         <div class="action-buttons">
                                             <!-- Replacing GitHub icon with Hugging Face icon -->
                                             <a href="https://huggingface.co/docz1105/VEGA_AE" target="_blank" rel="noopener noreferrer" class="action-btn">
-                                                <img src="./src/huggingface.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
                                                 Hugging Face
                                             </a>
 
@@ -1360,7 +1361,7 @@
                                         <div class="action-buttons">
                                             <!-- Replaced GitHub icon with Hugging Face icon -->
                                             <a href="https://huggingface.co/datasets/docz1105/ComBack" target="_blank" rel="noopener noreferrer" class="action-btn">
-                                                <img src="./src/huggingface.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
                                                 Hugging Face
                                             </a>
                                             <a href="https://neurips.cc/virtual/2024/poster/97455" target="_blank" rel="noopener noreferrer" class="action-btn">
@@ -1417,7 +1418,7 @@
                                 <div class="conference" style="font-size: 22px; height: auto;"> NeurIPS'25</div>
                                 <div class="action-buttons"> 
                                     <a href="https://huggingface.co/collections/kcxain/qimeng-mupa" target="_blank" rel="noopener noreferrer" class="action-btn">
-                                                <img src="./src/huggingface.svg" alt="Hugging Face Logo" width="20" height="20">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
                                                 Hugging Face
                                             </a>
 
@@ -1449,7 +1450,7 @@
                             <!-- BabelTower -->
                             <article class="paper-card"> <div class="card-content"> <div class="left-column"> <img src="./src/babeltower.png" alt="BabelTower Thumbnail" class="w-full h-auto"> </div> <div class="middle-column"> <h2 class="main-title"><a href="https://kcxain.github.io/babeltower" target="_blank" rel="noopener noreferrer">BabelTower: Learning to Auto-parallelized Program Translation</a></h2> <div class="authors">Yuanbo Wen, Qi Guo, Qiang Fu, Xiaqing Li, Jianxing Xu, Yanlin Tang, Yongwei Zhao, Xing Hu, Zidong Du, Ling Li, Chao Wang, Xuehai Zhou, Yunji Chen</div> <p class="description">BabelTower is a learning-based framework that automatically translates sequential C code into parallel CUDA code. By leveraging large-scale corpora and back-translation with discriminative reranking, it achieves up to 347× speedup and greatly improves developer productivity.</p> <div class="meta-info"></div> </div> <div class="right-column"> <div class="conference">ICML'22</div> <div class="action-buttons"> 
                                 <a href="https://huggingface.co/datasets/kcxain/BabelTower" target="_blank" rel="noopener noreferrer" class="action-btn">
-                                    <img src="./src/huggingface.svg" alt="Hugging Face Logo" width="20" height="20">
+                                    <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
                                     Hugging Face
                                 </a> 
                                 <a href="https://github.com/IPRC-ICT/BabelTower" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>GitHub <span class="github-stars"></span></a> <a href="https://proceedings.mlr.press/v162/wen22b/wen22b.pdf" target="_blank" rel="noopener noreferrer" class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Paper Link</a> </div> </div> </div> </article>
