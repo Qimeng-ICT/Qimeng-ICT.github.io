@@ -822,7 +822,7 @@
         <h1>QiMeng: Fully Automated Hardware and Software Design for Processor Chip</h1>
         <p>An open-source project for automated, high-performance, and easily deployable IC full-stack design.</p>
         </div>
-        <div id="visitCounter" class="visit-counter">总访问量：--</div>
+        <div id="visitCounter" class="visit-counter">Total Visits：--</div>
         
     </header>
 
@@ -1537,14 +1537,14 @@
                 
                 // 显示结果
                 if (count !== null && count >= 0) {
-                    el.textContent = '总访问量：' + count.toLocaleString();
+                    el.textContent = 'Total Visits：' + count.toLocaleString();
                 } else {
                     console.error('所有请求方式都失败了');
-                    el.textContent = '总访问量：--';
+                    el.textContent = 'Total Visits：--';
                 }
             } catch (e) {
                 console.error('访问量计数器错误:', e);
-                el.textContent = '总访问量：--';
+                el.textContent = 'Total Visits：--';
             }
         })();
   
