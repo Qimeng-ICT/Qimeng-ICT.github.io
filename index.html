@@ -45,50 +45,6 @@
             transition: var(--transition-default);
         }
 
-        /* 顶部小栏样式 */
-        .topbar {
-            width: 100%;
-            background-color: #4373AE; /* 与下方头部一致 */
-            color: #ffffff;
-            border-bottom: none;
-            font-size: 16px;
-            padding: 20px 40px;
-        }
-
-        .topbar-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .topbar-left {
-            display: flex;
-            align-items: center;
-        }
-
-        .topbar-logo {
-            height: clamp(40px, 6vw, 80px); /* 响应式高度，随页面缩放 */
-            width: auto;
-            max-height: clamp(40px, 6vw, 80px);
-            object-fit: contain;
-            display: block;
-        }
-
-        .topbar-text {
-            font-style: italic;
-            color: #ffffff;
-            text-align: center;
-            white-space: nowrap;
-            font-size: clamp(0.9rem, 1.2vw, 1.2rem); /* 响应式字体大小 */
-        }
-
-        .topbar-text > div {
-            line-height: 2.2;
-        }
-
         /* 头部样式 */
         header {
             background-color: #4373AE;
@@ -688,14 +644,7 @@
                 height: auto;
             }
             
-            .topbar-text {
-                font-size: clamp(0.75rem, 0.75vw, 0.9rem); /* 响应式字体 */
-            }
             
-            .topbar-logo {
-                height: clamp(35px, 5vw, 60px); /* 响应式logo高度 */
-                max-height: clamp(35px, 5vw, 60px);
-            }
             .action-buttons {
                 flex-direction: row;
                 margin-top: 0;
@@ -767,14 +716,7 @@
                 font-size: clamp(14px, 1.1vw, 16px) !important; /* 响应式字体，覆盖内联样式 */
             }
             
-            .topbar-text {
-                font-size: clamp(0.5rem, 0.5vw, 0.75rem); /* 响应式字体 */
-            }
             
-            .topbar-logo {
-                height: clamp(30px, 4vw, 50px); /* 响应式logo高度 */
-                max-height: clamp(30px, 4vw, 50px);
-            }
             .action-buttons {
                 flex-direction: column;
             }
@@ -840,32 +782,12 @@
                 font-size: clamp(11px, 1vw, 12px) !important; /* 响应式字体，覆盖内联样式 */
             }
             
-            .topbar-text {
-                font-size: clamp(0.3rem, 0.25vw, 0.5rem); /* 响应式字体 */
-            }
             
 
-            .topbar-logo {
-                height: clamp(26px, 3.5vw, 40px); /* 响应式logo高度，移动端 */
-                max-height: clamp(26px, 3.5vw, 40px);
-            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Top Thin Bar -->
-    <div class="topbar">
-        <div class="topbar-content">
-            <div class="topbar-left">
-                <img class="topbar-logo" src="./src/logos_white_edge.png" alt="Logos">
-            </div>
-            <div class="topbar-text">
-                <div>Intelligent Processor Research Center (IPRC), SKLP, ICT, CAS</div>
-                <div>Intelligent Computing Group, ISRC, IS, CAS</div>
-            </div>
-        </div>
-    </div>
 
     <!-- Header Section -->
     <header>
